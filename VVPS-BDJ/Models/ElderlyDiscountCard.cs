@@ -1,4 +1,4 @@
-﻿namespace VVPS_BDJ
+﻿namespace VVPS_BDJ.Models
 {
     public class ElderlyDiscountCard : DiscountCard
     {
@@ -9,7 +9,8 @@
             DiscountValue = 0.34;
         }
 
-        public override double DiscountValue {
+        public override double DiscountValue
+        {
             get => _discountValue;
             set => _discountValue = value;
         }

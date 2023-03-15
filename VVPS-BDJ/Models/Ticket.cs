@@ -1,18 +1,17 @@
-﻿namespace VVPS_BDJ
+﻿namespace VVPS_BDJ.Models
 {
     public class Ticket
     {
-        private readonly Random _randomizer = new Random();
+        private readonly Random _randomizer = new();
         public string Id { get; private set; }
         public string FromCity { get; private set; }
         public string ToCity { get; private set; }
         public bool IsTwoWay { get; private set; }
         public bool ChildUnder16Present { get; private set; }
 
-        public DateTime ReservedOn { get; set; }
         public DateTime DepartureDate { get; set; }
 
-        public DiscountCard UsedDiscountCard { get; set; }
+        public DiscountCard? UsedDiscountCard { get; set; }
 
         public double? Price { get; set; }
 
@@ -32,7 +31,7 @@
 
         internal void Deconstruct(
             out string fromCity, out string toCity, out bool isTwoWay,
-            out DiscountCard discountCard, out bool childUnder16Present,
+            out DiscountCard? discountCard, out bool childUnder16Present,
             out DateTime departureDate
         )
         {

@@ -1,19 +1,17 @@
-﻿using System;
-
-namespace VVPS_BDJ
+﻿namespace VVPS_BDJ.Utils
 {
     public static class TicketReservation
     {
         // TODO: Add train Timetable - {From-To} + Departure time
-        public static bool ReserveTicket(Ticket ticket, DateTime departureDate)
+        public static bool ReserveTicket(Ticket[] tickets, DateTime departureDate)
         {
             // TODO: add check for valid departure time
             // TODO: compare time portion of departureDate and Timetable departureDate
             DateTime reservedDate = DateTime.Now;
             bool isTicketNull = ticket == null;
             bool isReservationInvalid = departureDate <= reservedDate;
-            
-            if(isTicketNull || isReservationInvalid) return false;
+
+            if (isTicketNull || isReservationInvalid) return false;
 
             ticket.ReservedOn = reservedDate;
             ticket.DepartureDate = departureDate;

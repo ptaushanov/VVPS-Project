@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 
-namespace VVPS_BDJ
+namespace VVPS_BDJ.Utils
 {
     public static class TicketPricing
     {
-        public static Dictionary<string, double> PricingTable { private get; set; }
+        public static Dictionary<string, double>? PricingTable { private get; set; }
 
         private static double CalculatePriceFromTimeOfDay
             (string fromCity, string toCity, DateTime departureDate)
@@ -54,6 +52,11 @@ namespace VVPS_BDJ
         {
             const string searchKeyFormat = "{0}-{1}";
             string searchKey = string.Format(searchKeyFormat, fromCity, toCity);
+
+            if (PricingTable == null)
+            {
+                throw new NullReferenceException("PricingTable was null!");
+            }
 
             if (!PricingTable.ContainsKey(searchKey))
             {

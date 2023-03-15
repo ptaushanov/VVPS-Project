@@ -1,4 +1,4 @@
-﻿namespace VVPS_BDJ
+﻿namespace VVPS_BDJ.Models
 {
     public class FamilyDiscountCard : DiscountCard
     {
