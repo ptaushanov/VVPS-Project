@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VVPS
+namespace VVPS_BDJ
 {
     public static class TicketReservation
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace VVPS
+namespace VVPS_BDJ
 {
     public static class TicketPricing
     {

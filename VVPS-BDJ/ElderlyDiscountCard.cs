@@ -1,4 +1,4 @@
-﻿namespace VVPS
+﻿namespace VVPS_BDJ
 {
     public class ElderlyDiscountCard : DiscountCard
     {

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace VVPS
+﻿namespace VVPS_BDJ
 {
     public class Ticket
     {
