@@ -9,6 +9,7 @@
         public TimeOnly DeparuteTime { get; set; }
         public TimeOnly ArrivalTime { get; set; }
 
+        public TimetableRecord() {}
         public TimetableRecord(
             int? timetableRecordId, string departureLocation,
             string arrivalLocation, TimeOnly deparuteTime, TimeOnly arrivalTime

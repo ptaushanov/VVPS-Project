@@ -14,6 +14,8 @@
 
         public double? Price { get; set; }
 
+        public Ticket() {}
+
         public Ticket(
             int? ticketId, string fromCity, string toCity,
             bool isTwoWay = false, bool childUnder16Present = false

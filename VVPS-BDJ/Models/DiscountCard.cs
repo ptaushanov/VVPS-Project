@@ -8,6 +8,8 @@
 
         public abstract double DiscountValue { get; set; }
 
+        protected DiscountCard(){}
+
         public DiscountCard(int? discountCardId, string firstName, string lastName)
         {
             DiscountCardId = discountCardId;

@@ -8,6 +8,8 @@
 
         public bool Canceled { get; set; }
 
+        public Reservation() {}
+
         public Reservation(int? reservationId, IEnumerable<Ticket> reservedTickets, DateTime reservedOn)
         {
             ReservationId = reservationId;
