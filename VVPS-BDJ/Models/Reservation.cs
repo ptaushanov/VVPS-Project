@@ -2,13 +2,15 @@
 {
     public class Reservation
     {
-        public Ticket[] ReservedTickets { get; set; }
+        public int? ReservationId { get; private set; }
+        public IEnumerable<Ticket> ReservedTickets { get; set; }
         public DateTime ReservedOn { get; set; }
 
         public bool Canceled { get; set; }
 
-        public Reservation(Ticket[] reservedTickets, DateTime reservedOn)
+        public Reservation(int? reservationId, IEnumerable<Ticket> reservedTickets, DateTime reservedOn)
         {
+            ReservationId = reservationId;
             ReservedTickets = reservedTickets;
             ReservedOn = reservedOn;
             Canceled = false;

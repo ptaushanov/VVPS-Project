@@ -2,8 +2,7 @@
 {
     public class Ticket
     {
-        private readonly Random _randomizer = new();
-        public string Id { get; private set; }
+        public int? TicketId { get; private set; }
         public string FromCity { get; private set; }
         public string ToCity { get; private set; }
         public bool IsTwoWay { get; private set; }
@@ -15,10 +14,12 @@
 
         public double? Price { get; set; }
 
-        public Ticket(string fromCity, string toCity, bool isTwoWay = false, bool childUnder16Present = false)
+        public Ticket(
+            int? ticketId, string fromCity, string toCity,
+            bool isTwoWay = false, bool childUnder16Present = false
+        )
         {
-            int randomInt = _randomizer.Next(100000, 999999);
-            Id = $"TICKET{randomInt}BDJ";
+            TicketId = ticketId;
             FromCity = fromCity;
             ToCity = toCity;
             IsTwoWay = isTwoWay;

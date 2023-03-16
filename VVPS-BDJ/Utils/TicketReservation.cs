@@ -1,27 +1,22 @@
-﻿namespace VVPS_BDJ.Utils
+﻿using VVPS_BDJ.Models;
+
+namespace VVPS_BDJ.Utils
 {
     public static class TicketReservation
     {
-        // TODO: Add train Timetable - {From-To} + Departure time
-        public static bool ReserveTicket(Ticket[] tickets, DateTime departureDate)
+        public static bool ReserveTickets(IEnumerable<Ticket> tickets, DateTime reservationDate)
         {
-            // TODO: add check for valid departure time
-            // TODO: compare time portion of departureDate and Timetable departureDate
-            DateTime reservedDate = DateTime.Now;
-            bool isTicketNull = ticket == null;
-            bool isReservationInvalid = departureDate <= reservedDate;
+            if (tickets == null) return false;
+            bool includesInvalidReservations = tickets.Any(ticket => ticket.DepartureDate <= reservationDate);
+            Reservation reservation = new(null, tickets, reservationDate);
 
-            if (isTicketNull || isReservationInvalid) return false;
-
-            ticket.ReservedOn = reservedDate;
-            ticket.DepartureDate = departureDate;
-
+            // TODO: Store tickets in DB
             return true;
         }
 
         // TODO: Store ticket reservations
         // TODO: View ticket reservations
         // TODO: Change ticket reservations
-        // TODO: Cancel ticker reservations
+        // TODO: Cancel ticket reservations
     }
 }

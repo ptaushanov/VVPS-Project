@@ -4,7 +4,8 @@
     {
         private double _discountValue;
 
-        public ElderlyDiscountCard(string firstName, string lastName) : base(firstName, lastName)
+        public ElderlyDiscountCard(int? id, string firstName, string lastName) 
+            : base(id, firstName, lastName)
         {
             DiscountValue = 0.34;
         }

@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\VVPS\VVPS.csproj" />
+    <ProjectReference Include="..\VVPS-BDJ\VVPS-BDJ.csproj" />
   </ItemGroup>
 
 </Project>

@@ -18,7 +18,7 @@ namespace VVPS.UnitTests
                 DateTime.ParseExact("23.09.2050", "dd.MM.yyyy", CultureInfo.InvariantCulture);
 
             // Act
-            bool wasSuccessful = TicketReservation.ReserveTicket(null, departureDate);
+            bool wasSuccessful = TicketReservation.ReserveTickets(null, departureDate);
 
             // Assert
             Assert.That(wasSuccessful, Is.False);
