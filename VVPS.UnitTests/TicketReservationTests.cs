@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using VVPS_BDJ.Models;
+﻿using VVPS_BDJ.Models;
 using VVPS_BDJ.Utils;
 
 namespace VVPS.UnitTests
@@ -7,53 +6,61 @@ namespace VVPS.UnitTests
     [TestFixture]
     public class TicketReservationTests
     {
-
         #region ReserveTicketTests
 
         [Test]
-        public void ReserveTicket_ShouldReturnFalse_WhenTicketIsNull()
+        public void ReserveTicket_ShouldThrowArgumentNullException_WhenTicketsAreNull()
         {
             // Arrange
-            DateTime departureDate = 
-                DateTime.ParseExact("23.09.2050", "dd.MM.yyyy", CultureInfo.InvariantCulture);
+            DateTime reservationDate = new(2025, 9, 23);
 
-            // Act
-            bool wasSuccessful = TicketReservation.ReserveTickets(null, departureDate);
-
-            // Assert
-            Assert.That(wasSuccessful, Is.False);
+            // Act & Assert
+            Assert.Throws<ArgumentNullException>(
+                () => TicketReservation.ReserveTickets(null, reservationDate)
+            );
         }
 
         [Test]
-        public void ReserveTicket_ShouldReturnFalse_WhenReservationInvalid()
+        public void ReserveTicket_ShouldThrowArgumentException_WhenTicketsAreExpired()
         {
             // Arrange
-            DateTime departureDate =
-                DateTime.ParseExact("03.07.1999", "dd.MM.yyyy", CultureInfo.InvariantCulture);
+            Ticket[] tickets = new Ticket[]
+            {
+                new Ticket(null, "Sofia", "Varna", false, false)
+                {
+                    DepartureDate = new DateTime(2020, 2, 18)
+                }
+            };
 
-            Ticket ticket = new("CityA", "CityB", false, false);
+            DateTime reservationDate = new(2050, 9, 23);
 
-            // Act
-            bool wasSuccessful = TicketReservation.ReserveTicket(ticket, departureDate);
-
-            // Assert
-            Assert.That(wasSuccessful, Is.False);
+            // Act & Assert
+            Assert.Throws<ArgumentException>(
+                () => TicketReservation.ReserveTickets(tickets, reservationDate)
+            );
         }
 
         [Test]
-        public void ReserveTicket_ShouldReturnTrue_WhenTicketPresentAndReservationValid()
+        public void ReserveTicket_ShouldReturnReservation_WhenTicketsAreValid()
         {
             // Arrange
-            DateTime departureDate =
-                DateTime.ParseExact("23.09.2050", "dd.MM.yyyy", CultureInfo.InvariantCulture);
+            Ticket[] tickets = new Ticket[]
+            {
+                new Ticket(null, "Sofia", "Varna", false, false)
+                {
+                    DepartureDate = new DateTime(2020, 2, 18)
+                }
+            };
 
-            Ticket ticket = new("CityA", "CityB", false, false);
+            DateTime reservationDate = new(2019, 9, 23);
 
             // Act
-            bool wasSuccessful = TicketReservation.ReserveTicket(ticket, departureDate);
+            var reservation = TicketReservation.ReserveTickets(tickets, reservationDate);
 
             // Assert
-            Assert.That(wasSuccessful, Is.True);
+            Assert.That(reservation, Is.Not.Null);
+            Assert.That(reservation.ReservedOn, Is.EqualTo(reservationDate));
+            Assert.That(reservation.ReservedTickets, Is.SameAs(tickets));
         }
 
         #endregion
