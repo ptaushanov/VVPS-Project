@@ -18,10 +18,5 @@ namespace VVPS_BDJ.Utils
 
             return reservation;
         }
-
-        // TODO: Store ticket reservations
-        // TODO: View ticket reservations
-        // TODO: Change ticket reservations
-        // TODO: Cancel ticket reservations
     }
 }

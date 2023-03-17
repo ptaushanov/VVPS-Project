@@ -1,37 +1,62 @@
 ﻿using VVPS_BDJ.Models;
 
-namespace VVPS_BDJ.Utils
+namespace VVPS_BDJ.DAL
 {
-    public class TimetableManager
+    public class BDJService
     {
+        private static readonly BDJContext _bdjContext = new();
+
+        #region Reservation Queries
+
+        public static void StoreReservation(Reservation reservation)
+        {
+            _bdjContext.Reservations.Add(reservation);
+            _bdjContext.SaveChanges();
+        }
+
+        public static IEnumerable<Reservation> GetAllReservations()
+        {
+            return _bdjContext.Reservations.AsEnumerable();
+        }
+
+        public static void ChangeReservation() => _bdjContext.SaveChanges();
+
+        public static void CancelReservation(Reservation reservation)
+        {
+            reservation.Canceled = true;
+            _bdjContext.SaveChanges();
+        } 
+
+        #endregion
+
+        #region TimetableRecord Queries
+        
         public static IEnumerable<TimetableRecord> FindTimetableRecordByDepartureLocation
         (
-            Timetable timetable, string departureLocation
+            string departureLocation
         )
         {
-            if (timetable == null) throw new ArgumentNullException(nameof(timetable));
-            return timetable
+            return _bdjContext
                 .TimetableRecords
                 .Where(record => record.DepartureLocation == departureLocation);
         }
 
         public static IEnumerable<TimetableRecord> FindTimetableRecordByArivalLocation
         (
-            Timetable timetable, string arrivalLocation
+             string arrivalLocation
         )
         {
-            if (timetable == null) throw new ArgumentNullException(nameof(timetable));
-            return timetable
+            return _bdjContext
                 .TimetableRecords
                 .Where(record => record.ArrivalLocation == arrivalLocation);
         }
 
         public static IEnumerable<TimetableRecord> FindTimetableRecordByDeparuteTime
         (
-            Timetable timetable, TimeOnly minTime, TimeOnly maxTime
+            TimeOnly minTime, TimeOnly maxTime
         )
         {
-            return timetable
+            return _bdjContext
                 .TimetableRecords
                 .Where(record =>
                     record.DeparuteTime >= minTime &&
@@ -41,10 +66,10 @@ namespace VVPS_BDJ.Utils
 
         public static IEnumerable<TimetableRecord> FindTimetableRecordByArrivalTime
         (
-            Timetable timetable, TimeOnly minTime, TimeOnly maxTime
+            TimeOnly minTime, TimeOnly maxTime
         )
         {
-            return timetable
+            return _bdjContext
                 .TimetableRecords
                 .Where(record =>
                     record.ArrivalTime >= minTime &&
@@ -52,5 +77,6 @@ namespace VVPS_BDJ.Utils
                 );
         }
 
+        #endregion
     }
 }

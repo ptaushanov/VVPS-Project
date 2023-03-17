@@ -86,7 +86,7 @@ namespace VVPS_BDJ.Utils
                 CalculatePriceFromTimeOfDay(fromCity, toCity, departureDate) :
                 CalculatePriceFromDiscount(fromCity, toCity, discountCard, childUnder16Present);
 
-            // Include one-way and two way trips
+            // Include one-way and two-way trips
             finalTicketPrice = isTwoWay ? finalTicketPrice * 2 : finalTicketPrice;
 
             return finalTicketPrice;

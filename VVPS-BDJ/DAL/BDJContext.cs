@@ -8,7 +8,7 @@ namespace VVPS_BDJ.DAL
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
 
-        public DbSet<TimetableRecord> TimetableRecord { get; set; }
+        public DbSet<TimetableRecord> TimetableRecords { get; set; }
         public DbSet<DiscountCard> DiscountCards { get; set; }
         public DbSet<ElderlyDiscountCard> ElderlyDiscountCards { get; set; }
         public DbSet<FamilyDiscountCard> FamilyDiscountCards { get; set; }
