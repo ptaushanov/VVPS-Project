@@ -81,6 +81,14 @@ namespace VVPS_BDJ.DAL
 
         public static IEnumerable<User> FindAllUsers() => _bdjContext.Users.AsEnumerable();
 
+        public static User? FindAdminByUsernameAndPassword(string username, string password)
+        {
+            return _bdjContext.Users.FirstOrDefault(
+                user =>
+                    user.Username == username && user.Password == password && user.IsAdmin == true
+            );
+        }
+
         #endregion
 
         #region Discount Queries

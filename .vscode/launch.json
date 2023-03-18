@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/VVPS.UnitTests/bin/Debug/net6.0/VVPS.UnitTests.dll",
+            "program": "${workspaceFolder}/VVPS-BDJ/bin/Debug/net6.0/VVPS-BDJ.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/VVPS.UnitTests",
+            "cwd": "${workspaceFolder}/VVPS-BDJ",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false

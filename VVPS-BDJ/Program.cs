@@ -1,4 +1,4 @@
-﻿using VVPS_BDJ.Views;
+﻿using VVPS_BDJ.Controllers;
 
 namespace VVPS_BDJ
 {
@@ -6,8 +6,8 @@ namespace VVPS_BDJ
     {
         static void Main(string[] args)
         {
-            MainConsole mainConsole = new();
-            mainConsole.ShowMainMenu();
+            LoginController loginController = new();
+            loginController.LogInAsAdministrator();
         }
     }
 }

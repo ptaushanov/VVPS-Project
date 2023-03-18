@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VVPS_BDJ.DAL;
 
@@ -10,9 +11,11 @@ using VVPS_BDJ.DAL;
 namespace VVPS_BDJ.Migrations
 {
     [DbContext(typeof(BDJContext))]
-    partial class BDJContextModelSnapshot : ModelSnapshot
+    [Migration("20230318194341_UpdatedUsers")]
+    partial class UpdatedUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.4");
