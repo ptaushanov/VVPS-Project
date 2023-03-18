@@ -250,6 +250,7 @@ namespace VVPS.UnitTests
         public void CalculateTotalPrice_ShouldReturnLowerDiscountedPrice_WhenDiscountCardIsNull()
         {
             // Arrange
+            TicketPricing.PricingTable = PricingTable;
             Ticket ticket = new(null, FromCity, ToCity, false, false);
             double discountedPrice = 47.5;
             double tolerance = 0.0001;
@@ -265,6 +266,7 @@ namespace VVPS.UnitTests
         public void CalculateTotalPrice_ShouldReturnHigherDiscountedPrice_WhenDiscountCardPresent()
         {
             // Arrange
+            TicketPricing.PricingTable = PricingTable;
             Ticket ticket = new(null, FromCity, ToCity, true, false);
             ticket.UsedDiscountCard = DiscountCard;
             double discountedPrice = 90.0;
