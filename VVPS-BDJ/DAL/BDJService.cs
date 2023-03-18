@@ -8,16 +8,14 @@ namespace VVPS_BDJ.DAL
 
         #region Reservation Queries
 
-        public static void StoreReservation(Reservation reservation)
+        public static void AddReservation(Reservation reservation)
         {
             _bdjContext.Reservations.Add(reservation);
             _bdjContext.SaveChanges();
         }
 
-        public static IEnumerable<Reservation> GetAllReservations()
-        {
-            return _bdjContext.Reservations.AsEnumerable();
-        }
+        public static IEnumerable<Reservation> FindAllReservations() =>
+            _bdjContext.Reservations.AsEnumerable();
 
         public static void ChangeReservation() => _bdjContext.SaveChanges();
 
@@ -25,56 +23,92 @@ namespace VVPS_BDJ.DAL
         {
             reservation.Canceled = true;
             _bdjContext.SaveChanges();
-        } 
+        }
 
         #endregion
 
         #region TimetableRecord Queries
-        
-        public static IEnumerable<TimetableRecord> FindTimetableRecordByDepartureLocation
-        (
+
+        public static IEnumerable<TimetableRecord> FindTimetableRecordByDepartureLocation(
             string departureLocation
         )
         {
-            return _bdjContext
-                .TimetableRecords
-                .Where(record => record.DepartureLocation == departureLocation);
+            return _bdjContext.TimetableRecords.Where(
+                record => record.DepartureLocation == departureLocation
+            );
         }
 
-        public static IEnumerable<TimetableRecord> FindTimetableRecordByArivalLocation
-        (
-             string arrivalLocation
+        public static IEnumerable<TimetableRecord> FindTimetableRecordByArivalLocation(
+            string arrivalLocation
         )
         {
-            return _bdjContext
-                .TimetableRecords
-                .Where(record => record.ArrivalLocation == arrivalLocation);
+            return _bdjContext.TimetableRecords.Where(
+                record => record.ArrivalLocation == arrivalLocation
+            );
         }
 
-        public static IEnumerable<TimetableRecord> FindTimetableRecordByDeparuteTime
-        (
-            TimeOnly minTime, TimeOnly maxTime
+        public static IEnumerable<TimetableRecord> FindTimetableRecordByDeparuteTime(
+            TimeOnly minTime,
+            TimeOnly maxTime
         )
         {
-            return _bdjContext
-                .TimetableRecords
-                .Where(record =>
-                    record.DeparuteTime >= minTime &&
-                    record.DeparuteTime <= maxTime
-                );
+            return _bdjContext.TimetableRecords.Where(
+                record => record.DeparuteTime >= minTime && record.DeparuteTime <= maxTime
+            );
         }
 
-        public static IEnumerable<TimetableRecord> FindTimetableRecordByArrivalTime
-        (
-            TimeOnly minTime, TimeOnly maxTime
+        public static IEnumerable<TimetableRecord> FindTimetableRecordByArrivalTime(
+            TimeOnly minTime,
+            TimeOnly maxTime
         )
         {
-            return _bdjContext
-                .TimetableRecords
-                .Where(record =>
-                    record.ArrivalTime >= minTime &&
-                    record.ArrivalTime <= maxTime
-                );
+            return _bdjContext.TimetableRecords.Where(
+                record => record.ArrivalTime >= minTime && record.ArrivalTime <= maxTime
+            );
+        }
+
+        #endregion
+
+        #region User Queries
+
+        public static void AddUser(User user)
+        {
+            _bdjContext.Users.Add(user);
+            _bdjContext.SaveChanges();
+        }
+
+        public static void UpdateUser() => _bdjContext.SaveChanges();
+
+        public static IEnumerable<User> FindAllUsers() => _bdjContext.Users.AsEnumerable();
+
+        #endregion
+
+        #region Discount Queries
+
+        public static void AddDiscountCard(ElderlyDiscountCard discountCard)
+        {
+            _bdjContext.DiscountCards.Add(discountCard);
+            _bdjContext.SaveChanges();
+        }
+
+        public static void AddDiscountCard(FamilyDiscountCard discountCard)
+        {
+            _bdjContext.DiscountCards.Add(discountCard);
+            _bdjContext.SaveChanges();
+        }
+
+        public static void UpdateDiscountCard() => _bdjContext.SaveChanges();
+
+        public static void DeleteDiscountCard(ElderlyDiscountCard discountCard)
+        {
+            _bdjContext.DiscountCards.Remove(discountCard);
+            _bdjContext.SaveChanges();
+        }
+
+        public static void DeleteDiscountCard(FamilyDiscountCard discountCard)
+        {
+            _bdjContext.DiscountCards.Remove(discountCard);
+            _bdjContext.SaveChanges();
         }
 
         #endregion

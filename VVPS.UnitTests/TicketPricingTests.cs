@@ -24,7 +24,7 @@ namespace VVPS.UnitTests
 
             PricingTable = new Dictionary<string, double>() { { "Sofia-Varna", 50.0 } };
 
-            DiscountCard = new FamilyDiscountCard(null, "Jane", "Doe");
+            DiscountCard = new FamilyDiscountCard();
         }
 
         #endregion

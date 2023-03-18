@@ -4,10 +4,10 @@
     {
         private double _discountValue;
 
-        public FamilyDiscountCard() {}
+        public FamilyDiscountCard() { }
 
-        public FamilyDiscountCard(int? id, string firstName, string lastName)
-            : base(id, firstName, lastName)
+        public FamilyDiscountCard(int? id)
+            : base(id)
         {
             _discountValue = 0.1;
         }

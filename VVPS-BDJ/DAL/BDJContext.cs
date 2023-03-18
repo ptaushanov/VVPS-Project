@@ -12,11 +12,19 @@ namespace VVPS_BDJ.DAL
         public DbSet<DiscountCard> DiscountCards { get; set; }
         public DbSet<ElderlyDiscountCard> ElderlyDiscountCards { get; set; }
         public DbSet<FamilyDiscountCard> FamilyDiscountCards { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Data Source=bdj-sqlite.db");
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            User defaultAdminUser = new(1, "Admin", "Admin", "admin", DateTime.MinValue, true); 
+            modelBuilder.Entity<User>().HasData(defaultAdminUser);
+        }
     }
 }
