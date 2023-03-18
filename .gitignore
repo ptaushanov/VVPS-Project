@@ -351,3 +351,6 @@ MigrationBackup/
 
 # Sonarcube scanner
 .sonarqube/
+
+# Vistual Studio code
+/.vscode
