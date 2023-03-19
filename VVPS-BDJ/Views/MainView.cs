@@ -2,7 +2,7 @@
 
 namespace VVPS_BDJ.Views
 {
-    public class MainConsole
+    public class MainView
     {
         private readonly ConsoleMenu _mainMenu = new ConsoleMenu()
             .Add("One", () => Console.WriteLine("One"))

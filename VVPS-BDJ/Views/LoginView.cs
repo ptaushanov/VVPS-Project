@@ -2,9 +2,9 @@ using VVPS_BDJ.Models;
 
 namespace VVPS_BDJ.Views
 {
-    public class LoginConsole
+    public class LoginView
     {
-        public LoginCredentials DisplayLoginCredentialsForm(bool isLoginFailed = false)
+        public static LoginCredentials DisplayLoginCredentialsForm(bool isLoginFailed = false)
         {
             Console.Clear();
             Console.WriteLine("[Login Form]" + Environment.NewLine);

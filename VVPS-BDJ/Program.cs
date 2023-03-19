@@ -1,4 +1,5 @@
 ﻿using VVPS_BDJ.Controllers;
+using VVPS_BDJ.Utils;
 
 namespace VVPS_BDJ
 {
@@ -6,8 +7,11 @@ namespace VVPS_BDJ
     {
         static void Main(string[] args)
         {
-            LoginController loginController = new();
-            loginController.LogInAsAdministrator();
+            ExecutionChain executionChain = new();
+            executionChain
+                .Add(() => LoginController.LogInAsAdministrator())
+                .Add(() => MainController.ShowMainMenu())
+                .Execute();
         }
     }
 }

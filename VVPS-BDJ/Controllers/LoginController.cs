@@ -4,21 +4,15 @@ using VVPS_BDJ.DAL;
 
 namespace VVPS_BDJ.Controllers
 {
-    public class LoginController
+    public static class LoginController
     {
-        private void ShowMainMenuAfterLogin()
-        {
-            MainConsole mainConsole = new();
-            mainConsole.ShowMainMenu();
-        }
+        private static LoginCredentials ShowLoginScreen() =>
+            LoginView.DisplayLoginCredentialsForm(false);
 
-        private LoginCredentials ShowLoginScreen(LoginConsole loginConsole) =>
-            loginConsole.DisplayLoginCredentialsForm(false);
+        private static LoginCredentials ShowLoginScreenAfterFailedLogin() =>
+            LoginView.DisplayLoginCredentialsForm(true);
 
-        private LoginCredentials ShowLoginScreenAfterFailedLogin(LoginConsole loginConsole) =>
-            loginConsole.DisplayLoginCredentialsForm(true);
-
-        private bool CheckLoginValid(LoginCredentials loginCredentials)
+        private static bool CheckLoginValid(LoginCredentials loginCredentials)
         {
             return BDJService.FindAdminByUsernameAndPassword(
                     loginCredentials.Username,
@@ -26,15 +20,14 @@ namespace VVPS_BDJ.Controllers
                 ) != null;
         }
 
-        public void LogInAsAdministrator()
+        public static bool LogInAsAdministrator()
         {
-            LoginConsole loginConsole = new();
-            LoginCredentials loginCredentials = ShowLoginScreen(loginConsole);
+            LoginCredentials loginCredentials = ShowLoginScreen();
 
             while (CheckLoginValid(loginCredentials) == false)
-                loginCredentials = ShowLoginScreenAfterFailedLogin(loginConsole);
+                loginCredentials = ShowLoginScreenAfterFailedLogin();
 
-            ShowMainMenuAfterLogin();
+            return true;
         }
     }
 }
