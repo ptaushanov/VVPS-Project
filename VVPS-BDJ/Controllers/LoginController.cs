@@ -20,14 +20,14 @@ namespace VVPS_BDJ.Controllers
                 ) != null;
         }
 
-        public static bool LogInAsAdministrator()
+        public static void LogInAsAdministrator()
         {
             LoginCredentials loginCredentials = ShowLoginScreen();
 
             while (CheckLoginValid(loginCredentials) == false)
                 loginCredentials = ShowLoginScreenAfterFailedLogin();
 
-            return true;
+            MainController.ShowMainMenu();
         }
     }
 }

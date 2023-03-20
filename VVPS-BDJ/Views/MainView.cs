@@ -2,21 +2,36 @@
 
 namespace VVPS_BDJ.Views
 {
-    public class MainView
+    public static class MainView
     {
-        private readonly ConsoleMenu _mainMenu = new ConsoleMenu()
-            .Add("One", () => Console.WriteLine("One"))
-            .Add("Two", () => Console.WriteLine("Two"))
-            .Add("Three", () => Console.WriteLine("Three"))
-            .Add("Four", () => Console.WriteLine("Four"))
-            .Configure(config =>
-            {
-                config.Selector = ">> ";
-                config.EnableFilter = true;
-                config.Title = "Main menu";
-                config.EnableBreadcrumb = true;
-            });
+        private static readonly ConsoleMenu _mainMenu;
+        static MainView()
+        {
+            _mainMenu = new ConsoleMenu()
+                .Configure(config =>
+                {
+                    config.Selector = ">> ";
+                    config.Title = "Main menu";
+                    config.EnableBreadcrumb = true;
+                });
+        }
 
-        public void ShowMainMenu() => _mainMenu.Show(); 
+        private static Action CreateSingleAction(Action action) => () =>
+        {
+            HideMainMenu();
+            action();
+        };
+
+        public static void LoadMenuItems(IEnumerable<KeyValuePair<string, Action>> menuItems)
+        {
+            menuItems
+                .ToList()
+                .ForEach(menuItem =>
+                    _mainMenu.Add(menuItem.Key, CreateSingleAction(menuItem.Value)
+                ));
+        }
+
+        public static void DisplayMainMenu() => _mainMenu.Show();
+        public static void HideMainMenu() => _mainMenu.CloseMenu();
     }
 }

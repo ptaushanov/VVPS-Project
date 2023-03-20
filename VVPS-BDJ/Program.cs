@@ -1,17 +1,6 @@
-﻿using VVPS_BDJ.Controllers;
-using VVPS_BDJ.Utils;
+﻿using System.Text;
+using VVPS_BDJ.Controllers;
 
-namespace VVPS_BDJ
-{
-    public class Program
-    {
-        static void Main(string[] args)
-        {
-            ExecutionChain executionChain = new();
-            executionChain
-                .Add(() => LoginController.LogInAsAdministrator())
-                .Add(() => MainController.ShowMainMenu())
-                .Execute();
-        }
-    }
-}
+Console.OutputEncoding = Encoding.Unicode;
+//LoginController.LogInAsAdministrator();
+MainController.ShowMainMenu();
