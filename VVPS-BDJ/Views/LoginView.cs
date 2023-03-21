@@ -1,23 +1,21 @@
 using VVPS_BDJ.Models;
 
-namespace VVPS_BDJ.Views
+namespace VVPS_BDJ.Views;
+public class LoginView
 {
-    public class LoginView
+    public static LoginCredentials DisplayLoginCredentialsForm(bool isLoginFailed = false)
     {
-        public static LoginCredentials DisplayLoginCredentialsForm(bool isLoginFailed = false)
-        {
-            Console.Clear();
-            Console.WriteLine("[Login Form]" + Environment.NewLine);
+        Console.Clear();
+        Console.WriteLine("[Login Form]" + Environment.NewLine);
 
-            if (isLoginFailed)
-                Console.WriteLine("Login failed. Please try again." + Environment.NewLine);
+        if (isLoginFailed)
+            Console.WriteLine("Login failed. Please try again." + Environment.NewLine);
 
-            Console.Write("Enter your username: ");
-            string username = Console.ReadLine() ?? "";
-            Console.Write("Enter your password: ");
-            string password = Console.ReadLine() ?? "";
+        Console.Write("Enter your username: ");
+        string username = Console.ReadLine() ?? "";
+        Console.Write("Enter your password: ");
+        string password = Console.ReadLine() ?? "";
 
-            return new LoginCredentials(username, password);
-        }
+        return new LoginCredentials(username, password);
     }
 }

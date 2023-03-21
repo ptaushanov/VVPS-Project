@@ -1,37 +1,18 @@
-﻿using ConsoleTools;
+﻿using VVPS_BDJ.Utils;
 
-namespace VVPS_BDJ.Views
+namespace VVPS_BDJ.Views;
+public class MainView
 {
-    public static class MainView
+    private readonly IEnumerable<KeyValuePair<string, Action>> menuItems;
+
+    public MainView(IEnumerable<KeyValuePair<string, Action>> menuItems)
     {
-        private static readonly ConsoleMenu _mainMenu;
-        static MainView()
-        {
-            _mainMenu = new ConsoleMenu()
-                .Configure(config =>
-                {
-                    config.Selector = ">> ";
-                    config.Title = "Main menu";
-                    config.EnableBreadcrumb = true;
-                });
-        }
+        this.menuItems = menuItems;
+    }
 
-        private static Action CreateSingleAction(Action action) => () =>
-        {
-            HideMainMenu();
-            action();
-        };
-
-        public static void LoadMenuItems(IEnumerable<KeyValuePair<string, Action>> menuItems)
-        {
-            menuItems
-                .ToList()
-                .ForEach(menuItem =>
-                    _mainMenu.Add(menuItem.Key, CreateSingleAction(menuItem.Value)
-                ));
-        }
-
-        public static void DisplayMainMenu() => _mainMenu.Show();
-        public static void HideMainMenu() => _mainMenu.CloseMenu();
+    public void DisplayMainMenu()
+    {
+        ConsoleMenu mainMenu = new(menuItems);
+        mainMenu.Show();
     }
 }
