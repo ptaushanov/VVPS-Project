@@ -14,7 +14,7 @@ public class UsersController
             {
                 { "List users", () => ListAllUsers() },
                 { "Create a new user", () => CreateNewUser() },
-                { "Update existing user", () => Console.WriteLine("Two") },
+                { "Update existing user", () => UpdateUser() },
                 { "Go Back", () => GoBack() },
             };
         _usersView = new UsersView(menuItems);
@@ -41,6 +41,33 @@ public class UsersController
     {
         User newUser = _usersView.DisplayCreateUserForm();
         BDJService.AddUser(newUser);
+        ReturnToMenu();
+    }
+
+    private void UpdateUser()
+    {
+        // Get user ID after displaying list of users
+        IEnumerable<User> users = BDJService.FindAllUsers();
+        int? userId = _usersView.DisplayUserSelectMenu(users);
+
+        if (userId == null)
+        {
+            ReturnToMenu();
+            return;
+        }
+
+        User? dbUser = BDJService.FindUserById((int)userId);
+
+        if (dbUser == null)
+        {
+            ReturnToMenu();
+            return;
+        }
+
+        User user = _usersView.DisplayUpdateUserForm();
+        dbUser.CopyProperties(user, skipEmptyValues: true);
+
+        BDJService.UpdateUser();
         ReturnToMenu();
     }
 

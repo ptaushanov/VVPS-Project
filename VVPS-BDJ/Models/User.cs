@@ -54,5 +54,22 @@
             DiscountCard = null;
             IsAdmin = isAdmin;
         }
+
+        public void CopyProperties(User user, bool skipEmptyValues = false)
+        {
+            if (skipEmptyValues)
+            {
+                if (user.FirstName != string.Empty) FirstName = user.FirstName;
+                if (user.LastName != string.Empty) LastName = user.LastName;
+                if (user.Username != string.Empty) Username = user.Username;
+                if (user.Password != string.Empty) Password = user.Password;
+                return;
+            }
+
+            FirstName = user.FirstName;
+            LastName = user.LastName;
+            Username = user.Username;
+            Password = user.Password;
+        }
     }
 }

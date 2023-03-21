@@ -12,6 +12,12 @@ public class ConsoleMenu
         _menuTitle = string.Empty;
     }
 
+    public ConsoleMenu(string menuTitle)
+    {
+        _menuItems = new List<KeyValuePair<string, Action>>();
+        _menuTitle = menuTitle;
+    }
+
     public ConsoleMenu(IEnumerable<KeyValuePair<string, Action>> menuItems)
     {
         _menuItems = new List<KeyValuePair<string, Action>>(menuItems);
