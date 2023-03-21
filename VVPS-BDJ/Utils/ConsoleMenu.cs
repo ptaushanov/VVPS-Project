@@ -3,12 +3,25 @@ namespace VVPS_BDJ.Utils;
 public class ConsoleMenu
 {
     private readonly List<KeyValuePair<string, Action>> _menuItems;
+    private readonly string? _menuTitle;
     private int _selectedMenuItemIndex;
 
-    public ConsoleMenu() => _menuItems = new List<KeyValuePair<string, Action>>();
+    public ConsoleMenu()
+    {
+        _menuItems = new List<KeyValuePair<string, Action>>();
+        _menuTitle = string.Empty;
+    }
 
-    public ConsoleMenu(IEnumerable<KeyValuePair<string, Action>> menuItems) =>
+    public ConsoleMenu(IEnumerable<KeyValuePair<string, Action>> menuItems)
+    {
         _menuItems = new List<KeyValuePair<string, Action>>(menuItems);
+    }
+
+    public ConsoleMenu(IEnumerable<KeyValuePair<string, Action>> menuItems, string menuTitle)
+    {
+        _menuItems = new List<KeyValuePair<string, Action>>(menuItems);
+        _menuTitle = menuTitle;
+    }
 
     public ConsoleMenu Add(string displayName, Action action)
     {
@@ -23,9 +36,10 @@ public class ConsoleMenu
         while (true)
         {
             Console.Clear();
+            DisplayMenuTitle();
             DisplayMenuItems();
             bool isActionActive = GetUserInput();
-            if (!isActionActive) break;
+            if (isActionActive) break;
         }
     }
 
@@ -52,6 +66,12 @@ public class ConsoleMenu
         return false;
     }
 
+    private void DisplayMenuTitle()
+    {
+        if (!string.IsNullOrEmpty(_menuTitle))
+            Console.WriteLine($"({_menuTitle}){Environment.NewLine}");
+    }
+
     private void DisplayMenuItems()
     {
         // Display menu items with formatting
@@ -62,10 +82,10 @@ public class ConsoleMenu
 
     private Action<KeyValuePair<string, Action>> DisplaySingleItem()
     {
-        int index = 1;
+        int index = 0;
         return (item) =>
         {
-            string menuItemString = $"[{index}] {item.Key}";
+            string menuItemString = $"[{index + 1}] {item.Key}";
             if (index == _selectedMenuItemIndex)
                 Console.WriteLine($">> {menuItemString}");
             else

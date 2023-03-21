@@ -2,18 +2,18 @@
 using VVPS_BDJ.Models;
 
 namespace VVPS_BDJ.Views;
-public class UsersView
+public class UsersView : View
 {
-    private readonly IEnumerable<KeyValuePair<string, Action>> menuItems;
+    private readonly IEnumerable<KeyValuePair<string, Action>> _menuItems;
 
     public UsersView(IEnumerable<KeyValuePair<string, Action>> menuItems)
     {
-        this.menuItems = menuItems;
+        _menuItems = menuItems;
     }
 
     public void DisplayUsersMenu()
     {
-        ConsoleMenu usersMenu = new(menuItems);
+        ConsoleMenu usersMenu = new(_menuItems, "Users Menu");
         usersMenu.Show();
     }
 
@@ -24,9 +24,11 @@ public class UsersView
             user.DiscountCard.GetType().Name :
             "None";
 
+        string userAdminString = user.IsAdmin ? "Admin" : "User";
+
         Console.WriteLine("###########################################");
         Console.WriteLine(
-            $"ID: {user.UserId}{Environment.NewLine}" +
+            $"ID: {user.UserId} ({userAdminString}){Environment.NewLine}" +
             $"First name: {user.FirstName}{Environment.NewLine}" +
             $"Last name: {user.LastName}{Environment.NewLine}" +
             $"Username: {user.Username}{Environment.NewLine}" +
@@ -44,8 +46,6 @@ public class UsersView
         users
             .ToList()
             .ForEach(user => DisplaySingleUser(user));
-
-        DisplayUsersMenu();
     }
 
 }

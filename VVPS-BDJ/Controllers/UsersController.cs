@@ -4,30 +4,44 @@ using VVPS_BDJ.Views;
 
 namespace VVPS_BDJ.Controllers
 {
-    public static class UsersController
+    public class UsersController
     {
-        private static readonly Dictionary<string, Action> _menuItems;
+        private readonly UsersView _usersView;
 
-        static UsersController()
+        // When I can't be bothered to use dependency injection
+        public UsersController()
         {
-            _menuItems = new()
+            Dictionary<string, Action> menuItems = new()
             {
                 { "List users", () => ListAllUsers() },
                 { "Create a new user", () => Console.WriteLine("Two") },
                 { "Update existing user", () => Console.WriteLine("Two") },
+                { "Go Back", () => GoBack() },
             };
-
-            UsersView.LoadMenuItems(_menuItems);
+            _usersView = new UsersView(menuItems);
         }
 
-        public static void ShowUsersMenu() => UsersView.DisplayUsersMenu();
+        public UsersController(UsersView usersView) => _usersView = usersView;
 
-        private static void ListAllUsers() {
+        public void ShowUsersMenu() => _usersView.DisplayUsersMenu();
+
+        private void ReturnToMenu()
+        {
+            _usersView.DisplayPause();
+            _usersView.DisplayUsersMenu();
+        }
+
+        private void ListAllUsers()
+        {
             IEnumerable<User> users = BDJService.FindAllUsers();
-            UsersView.DisplayUserList(users);
+            _usersView.DisplayUserList(users);
+            ReturnToMenu();
+        }
 
-            Console.ReadLine();
-            ShowUsersMenu(); // Create own simple menu
+        private void GoBack()
+        {
+            new MainController()
+            .ShowMainMenu();
         }
     }
 }

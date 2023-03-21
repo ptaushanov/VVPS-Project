@@ -2,5 +2,10 @@
 using VVPS_BDJ.Controllers;
 
 Console.OutputEncoding = Encoding.Unicode;
-//LoginController.LogInAsAdministrator();
-MainController.ShowMainMenu();
+// PRODUCTION CODE:
+// LoginController loginController = new();
+// loginController.LogInAsAdministrator();
+
+// TEST CODE:
+MainController mainController = new();
+mainController.ShowMainMenu();

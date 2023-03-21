@@ -2,25 +2,33 @@ using VVPS_BDJ.Views;
 
 namespace VVPS_BDJ.Controllers
 {
-    public static class MainController
+    public class MainController
     {
-        private static Dictionary<string, Action> _menuItems;
+        private readonly MainView _mainView;
 
-        static MainController()
+        // When I can't be bothered to use dependency injection
+        public MainController()
         {
-            _menuItems = new()
+            Dictionary<string, Action> menuItems = new()
             {
                 { "Manage users (clients)",() => ShowUsersMenu() },
                 { "Manage user discounts", () => Console.WriteLine("Two") },
                 { "Search trains by departure/arrival location", () => Console.WriteLine("Three") },
                 { "Search trains by departure/arrival time", () => Console.WriteLine("Three") },
-                { "Manage reservations", () => Console.WriteLine("Three") }
+                { "Manage reservations", () => Console.WriteLine("Three") },
+                { "Exit", () => Environment.Exit(0) }
             };
 
-            MainView.LoadMenuItems(_menuItems);
+            _mainView = new MainView(menuItems);
         }
 
-        public static void ShowMainMenu() => MainView.DisplayMainMenu();
-        private static void ShowUsersMenu() => UsersController.ShowUsersMenu();
+        public MainController(MainView mainView) => _mainView = mainView;
+
+        public void ShowMainMenu() => _mainView.DisplayMainMenu();
+        private void ShowUsersMenu()
+        {
+            new UsersController()
+            .ShowUsersMenu();
+        }
     }
 }
