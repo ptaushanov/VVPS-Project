@@ -48,4 +48,49 @@ public class UsersView : View
             .ForEach(user => DisplaySingleUser(user));
     }
 
+    public User DisplayCreateUserForm()
+    {
+        Console.Clear();
+        Console.WriteLine("[Create new user]" + Environment.NewLine);
+
+        Console.Write("First name: ");
+        string firstName = Console.ReadLine() ?? string.Empty;
+
+        Console.Write("Last name: ");
+        string lastName = Console.ReadLine() ?? string.Empty;
+
+        Console.Write("Username: ");
+        string username = Console.ReadLine() ?? string.Empty;
+
+        Console.Write("Password: ");
+        string password = Console.ReadLine() ?? string.Empty;
+
+        Console.Write("Date of birth (dd.mm.yyyy): ");
+        string dateOfBirthString = Console.ReadLine() ?? string.Empty;
+        DateTime dateOfBirth;
+        bool isParsingSuccessful = DateTime.TryParse(dateOfBirthString, out dateOfBirth);
+
+        while (!isParsingSuccessful)
+        {
+            Console.WriteLine("Invalid date format. Please try again.");
+            Console.Write("Date of birth (dd.mm.yyyy): ");
+            dateOfBirthString = Console.ReadLine() ?? string.Empty;
+            isParsingSuccessful = DateTime.TryParse(dateOfBirthString, out dateOfBirth);
+        }
+
+        Console.Write("Is admin? (y/N): ");
+        string isAdminString = Console.ReadLine() ?? string.Empty;
+        bool isAdmin = isAdminString.ToLower() == "y";
+
+        return new User(
+            null,
+            firstName,
+            lastName,
+            username,
+            password,
+            dateOfBirth,
+            isAdmin
+        );
+    }
+
 }

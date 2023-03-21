@@ -1,15 +1,14 @@
 using VVPS_BDJ.Views;
 
-namespace VVPS_BDJ.Controllers
+namespace VVPS_BDJ.Controllers;
+public class MainController
 {
-    public class MainController
-    {
-        private readonly MainView _mainView;
+    private readonly MainView _mainView;
 
-        // When I can't be bothered to use dependency injection
-        public MainController()
-        {
-            Dictionary<string, Action> menuItems = new()
+    // When I can't be bothered to use dependency injection
+    public MainController()
+    {
+        Dictionary<string, Action> menuItems = new()
             {
                 { "Manage users (clients)",() => ShowUsersMenu() },
                 { "Manage user discounts", () => Console.WriteLine("Two") },
@@ -19,16 +18,15 @@ namespace VVPS_BDJ.Controllers
                 { "Exit", () => Environment.Exit(0) }
             };
 
-            _mainView = new MainView(menuItems);
-        }
+        _mainView = new MainView(menuItems);
+    }
 
-        public MainController(MainView mainView) => _mainView = mainView;
+    public MainController(MainView mainView) => _mainView = mainView;
 
-        public void ShowMainMenu() => _mainView.DisplayMainMenu();
-        private void ShowUsersMenu()
-        {
-            new UsersController()
-            .ShowUsersMenu();
-        }
+    public void ShowMainMenu() => _mainView.DisplayMainMenu();
+    private void ShowUsersMenu()
+    {
+        new UsersController()
+        .ShowUsersMenu();
     }
 }
