@@ -11,7 +11,7 @@ public class MainController
         Dictionary<string, Action> menuItems = new()
             {
                 { "Manage users (clients)",() => ShowUsersMenu() },
-                { "Manage user discounts", () => Console.WriteLine("Two") },
+                { "Manage user discounts", () => ShowDiscountsMenu() },
                 { "Search trains by departure/arrival location", () => Console.WriteLine("Three") },
                 { "Search trains by departure/arrival time", () => Console.WriteLine("Three") },
                 { "Manage reservations", () => Console.WriteLine("Three") },
@@ -28,5 +28,11 @@ public class MainController
     {
         new UsersController()
         .ShowUsersMenu();
+    }
+
+    private void ShowDiscountsMenu()
+    {
+        new DiscountsController()
+        .ShowDiscountsMenu();
     }
 }
