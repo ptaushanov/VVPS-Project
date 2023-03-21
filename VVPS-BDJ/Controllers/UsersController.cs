@@ -27,7 +27,7 @@ namespace VVPS_BDJ.Controllers
             UsersView.DisplayUserList(users);
 
             Console.ReadLine();
-            ShowUsersMenu();
+            ShowUsersMenu(); // Create own simple menu
         }
     }
 }

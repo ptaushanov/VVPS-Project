@@ -1,29 +1,29 @@
-﻿namespace VVPS_BDJ.Utils
+﻿namespace VVPS_BDJ.Utils;
+
+public class ExecutionChain
 {
-    public class ExecutionChain
+    private readonly List<Func<bool>> _funcs;
+
+    public ExecutionChain()
     {
-        private readonly List<Func<bool>> _funcs;
-        
-        public ExecutionChain()
-        {
-            _funcs = new List<Func<bool>>();
-        } 
+        _funcs = new List<Func<bool>>();
+    }
 
-        public ExecutionChain Add(Func<bool> func)
+    public ExecutionChain Add(Func<bool> func)
+    {
+        _funcs.Add(func);
+        return this;
+    }
+
+    public ExecutionChain Execute()
+    {
+        foreach (var func in _funcs)
         {
-            _funcs.Add(func);
-            return this;
+            bool didReturnTrue = func();
+            if (!didReturnTrue)
+                break;
         }
 
-        public ExecutionChain Execute()
-        {
-            foreach(var func in _funcs)
-            {
-                bool didReturnTrue = func();
-                if (!didReturnTrue) break;
-            }
-
-            return this;
-        }
+        return this;
     }
 }
