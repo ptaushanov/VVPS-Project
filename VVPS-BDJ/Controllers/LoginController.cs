@@ -1,8 +1,10 @@
 using VVPS_BDJ.Models;
 using VVPS_BDJ.Views;
 using VVPS_BDJ.DAL;
+using VVPS_BDJ.Utils;
 
 namespace VVPS_BDJ.Controllers;
+
 public class LoginController
 {
     private readonly LoginView _loginView;
@@ -12,27 +14,28 @@ public class LoginController
 
     public LoginController(LoginView loginView) => _loginView = loginView;
 
-    private LoginCredentials ShowLoginScreen() =>
-        _loginView.DisplayLoginCredentialsForm(false);
+    private LoginCredentials ShowLoginScreen() => _loginView.DisplayLoginCredentialsForm(false);
 
     private LoginCredentials ShowLoginScreenAfterFailedLogin() =>
         _loginView.DisplayLoginCredentialsForm(true);
 
-    private bool CheckLoginValid(LoginCredentials loginCredentials)
+    private User? FindUserByCredentials(LoginCredentials loginCredentials)
     {
-        return BDJService.FindAdminByUsernameAndPassword(
-                loginCredentials.Username,
-                loginCredentials.Password
-            ) != null;
+        return BDJService.FindUserByUsernameAndPassword(
+            loginCredentials.Username,
+            loginCredentials.Password
+        );
     }
 
-    public void LogInAsAdministrator()
+    public void LogIn()
     {
         LoginCredentials loginCredentials = ShowLoginScreen();
+        User? user = FindUserByCredentials(loginCredentials);
 
-        while (CheckLoginValid(loginCredentials) == false)
+        while (user == null)
             loginCredentials = ShowLoginScreenAfterFailedLogin();
 
+        SessionStorage.SetItem("Current-User", user);
         new MainController().ShowMainMenu();
     }
 }

@@ -90,11 +90,11 @@ namespace VVPS_BDJ.DAL
         public static User? FindUserById(int userId) =>
             _bdjContext.Users.FirstOrDefault(user => user.UserId == userId);
 
-        public static User? FindAdminByUsernameAndPassword(string username, string password)
+        public static User? FindUserByUsernameAndPassword(string username, string password)
         {
             return _bdjContext.Users.FirstOrDefault(
                 user =>
-                    user.Username == username && user.Password == password && user.IsAdmin == true
+                    user.Username == username && user.Password == password
             );
         }
 
