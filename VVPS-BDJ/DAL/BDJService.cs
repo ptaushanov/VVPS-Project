@@ -1,4 +1,5 @@
-﻿using VVPS_BDJ.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using VVPS_BDJ.Models;
 
 namespace VVPS_BDJ.DAL
 {
@@ -79,7 +80,12 @@ namespace VVPS_BDJ.DAL
 
         public static void UpdateUser() => _bdjContext.SaveChanges();
 
-        public static IEnumerable<User> FindAllUsers() => _bdjContext.Users.AsEnumerable();
+        public static IEnumerable<User> FindAllUsers()
+        {
+            return _bdjContext.Users
+            .Include(user => user.DiscountCard)
+            .AsEnumerable();
+        }
 
         public static User? FindUserById(int userId) =>
             _bdjContext.Users.FirstOrDefault(user => user.UserId == userId);
