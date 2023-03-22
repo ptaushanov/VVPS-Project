@@ -94,4 +94,6 @@ public class DiscountsView : View
 
         Console.WriteLine();
     }
+
+    // TODO: Fix DB not updating when adding discount card
 }

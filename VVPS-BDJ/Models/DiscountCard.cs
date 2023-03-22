@@ -2,7 +2,7 @@
 {
     public abstract class DiscountCard
     {
-        public int? DiscountCardId { get; private set; }
+        public int? DiscountCardId { get; set; }
 
         public abstract double DiscountValue { get; set; }
 

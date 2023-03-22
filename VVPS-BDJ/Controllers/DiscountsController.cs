@@ -116,6 +116,7 @@ public class DiscountsController
                 return;
         }
 
+        BDJService.AddDiscountCard(discountCard);
         user.DiscountCard = discountCard;
         BDJService.UpdateUser();
 
@@ -129,6 +130,7 @@ public class DiscountsController
 
     private void GoBack()
     {
-        new MainController().ShowMainMenu();
+        new MainController()
+        .ShowMainMenu();
     }
 }

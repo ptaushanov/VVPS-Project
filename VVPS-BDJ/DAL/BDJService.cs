@@ -96,29 +96,23 @@ namespace VVPS_BDJ.DAL
 
         #region Discount Queries
 
-        public static void AddDiscountCard(ElderlyDiscountCard discountCard)
+        public static void AddDiscountCard(DiscountCard discountCard)
         {
-            _bdjContext.DiscountCards.Add(discountCard);
-            _bdjContext.SaveChanges();
-        }
-
-        public static void AddDiscountCard(FamilyDiscountCard discountCard)
-        {
-            _bdjContext.DiscountCards.Add(discountCard);
+            if (discountCard is ElderlyDiscountCard elderlyDiscountCard)
+                _bdjContext.DiscountCards.Add(elderlyDiscountCard);
+            else if (discountCard is FamilyDiscountCard familyDiscountCard)
+                _bdjContext.DiscountCards.Add(familyDiscountCard);
             _bdjContext.SaveChanges();
         }
 
         public static void UpdateDiscountCard() => _bdjContext.SaveChanges();
 
-        public static void DeleteDiscountCard(ElderlyDiscountCard discountCard)
+        public static void DeleteDiscountCard(DiscountCard discountCard)
         {
-            _bdjContext.DiscountCards.Remove(discountCard);
-            _bdjContext.SaveChanges();
-        }
-
-        public static void DeleteDiscountCard(FamilyDiscountCard discountCard)
-        {
-            _bdjContext.DiscountCards.Remove(discountCard);
+            if (discountCard is ElderlyDiscountCard elderlyDiscountCard)
+                _bdjContext.DiscountCards.Remove(elderlyDiscountCard);
+            else if (discountCard is FamilyDiscountCard familyDiscountCard)
+                _bdjContext.DiscountCards.Remove(familyDiscountCard);
             _bdjContext.SaveChanges();
         }
 
