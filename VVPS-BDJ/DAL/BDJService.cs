@@ -39,7 +39,7 @@ namespace VVPS_BDJ.DAL
             );
         }
 
-        public static IEnumerable<TimetableRecord> FindTimetableRecordByArivalLocation(
+        public static IEnumerable<TimetableRecord> FindTimetableRecordByArrivalLocation(
             string arrivalLocation
         )
         {
@@ -48,13 +48,13 @@ namespace VVPS_BDJ.DAL
             );
         }
 
-        public static IEnumerable<TimetableRecord> FindTimetableRecordByDeparuteTime(
+        public static IEnumerable<TimetableRecord> FindTimetableRecordByDepartureTime(
             TimeOnly minTime,
             TimeOnly maxTime
         )
         {
             return _bdjContext.TimetableRecords.Where(
-                record => record.DeparuteTime >= minTime && record.DeparuteTime <= maxTime
+                record => record.DepartureTime >= minTime && record.DepartureTime <= maxTime
             );
         }
 

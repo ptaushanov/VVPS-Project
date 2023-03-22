@@ -30,9 +30,6 @@ public class DiscountsView : View
     public int? DisplayUserSelectMenu(IEnumerable<User> users)
     {
         int? selectedIndexOfUser = null;
-
-        Action<User> HandleSelectAction = (user) => { };
-
         ConsoleMenu userSelectMenu = new("User for discount card");
 
         users
@@ -70,7 +67,7 @@ public class DiscountsView : View
         return selectedDiscountCardType;
     }
 
-    private void DisplaySingleUserDiscount(User user)
+    private string FormatSingleUserWithDiscount(User user)
     {
         string discountCardType = user.DiscountCard == null
             ? "None"
@@ -80,20 +77,42 @@ public class DiscountsView : View
             $"{user.FirstName} {user.LastName} [{user.Username}]"
             + $" (Discount type: {discountCardType})";
 
-        Console.WriteLine(displayString);
+        return displayString;
     }
 
-    public void DisplayUserDiscountCards(IEnumerable<User> users)
+    public int? DisplayUserDiscountCards(IEnumerable<User> users)
+    {
+        Console.Clear();
+        Console.WriteLine("[Users & discount cards]" + Environment.NewLine);
+
+        int? selectedIndexOfUser = null;
+        ConsoleMenu userSelectMenu = new("User for discount card");
+
+        users
+            .ToList()
+            .ForEach(user =>
+            {
+                userSelectMenu.Add(
+                    FormatSingleUserWithDiscount(user),
+                    () => selectedIndexOfUser = user.UserId
+                );
+            });
+
+        userSelectMenu.Show();
+        return selectedIndexOfUser;
+    }
+
+    public void DisplayUserSelectWithDiscount(IEnumerable<User> users)
     {
         Console.Clear();
         Console.WriteLine("[Users & discount cards]" + Environment.NewLine);
 
         users
+            .Select(user => FormatSingleUserWithDiscount(user))
             .ToList()
-            .ForEach(user => DisplaySingleUserDiscount(user));
+            .ForEach(Console.WriteLine);
 
         Console.WriteLine();
     }
 
-    // TODO: Fix DB not updating when adding discount card
 }

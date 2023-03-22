@@ -125,7 +125,34 @@ public class DiscountsController
 
     private void RevokeDiscountCard()
     {
-        throw new NotImplementedException();
+        IEnumerable<User> users = BDJService.FindAllUsers();
+        int? userId = _discountsView.DisplayUserDiscountCards(users);
+
+        if (userId == null)
+        {
+            ReturnToMenu();
+            return;
+        }
+
+        User? user = BDJService.FindUserById((int)userId);
+
+        if (user == null)
+        {
+            ReturnToMenu();
+            return;
+        }
+
+        if (user.DiscountCard == null)
+        {
+            ReturnToMenu();
+            return;
+        }
+
+        BDJService.DeleteDiscountCard(user.DiscountCard);
+        user.DiscountCard = null;
+        BDJService.UpdateUser();
+
+        ReturnToMenu();
     }
 
     private void GoBack()

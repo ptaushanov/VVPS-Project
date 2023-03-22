@@ -12,8 +12,8 @@ public class MainController
             {
                 { "Manage users (clients)",() => ShowUsersMenu() },
                 { "Manage user discounts", () => ShowDiscountsMenu() },
-                { "Search trains by departure/arrival location", () => Console.WriteLine("Three") },
-                { "Search trains by departure/arrival time", () => Console.WriteLine("Three") },
+                { "Search trains by departure/arrival location", () => ShowSearchByLocationMenu() },
+                { "Search trains by departure/arrival time", () => ShowSearchByTimeMenu() },
                 { "Manage reservations", () => Console.WriteLine("Three") },
                 { "Exit", () => Environment.Exit(0) }
             };
@@ -34,5 +34,17 @@ public class MainController
     {
         new DiscountsController()
         .ShowDiscountsMenu();
+    }
+
+    private void ShowSearchByTimeMenu()
+    {
+        new TimetableController()
+        .ShowSearchByTimeMenu();
+    }
+
+    private void ShowSearchByLocationMenu()
+    {
+        new TimetableController()
+        .ShowSearchByLocationMenu();
     }
 }

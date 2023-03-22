@@ -6,19 +6,19 @@
         public string DepartureLocation { get; set; }
         public string ArrivalLocation { get; set; }
 
-        public TimeOnly DeparuteTime { get; set; }
+        public TimeOnly DepartureTime { get; set; }
         public TimeOnly ArrivalTime { get; set; }
 
-        public TimetableRecord() {}
+        public TimetableRecord() { }
         public TimetableRecord(
             int? timetableRecordId, string departureLocation,
-            string arrivalLocation, TimeOnly deparuteTime, TimeOnly arrivalTime
+            string arrivalLocation, TimeOnly departureTime, TimeOnly arrivalTime
         )
         {
             TimetableRecordId = timetableRecordId;
             DepartureLocation = departureLocation;
             ArrivalLocation = arrivalLocation;
-            DeparuteTime = deparuteTime;
+            DepartureTime = departureTime;
             ArrivalTime = arrivalTime;
         }
     }
