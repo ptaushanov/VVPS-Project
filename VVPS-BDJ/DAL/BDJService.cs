@@ -68,6 +68,11 @@ namespace VVPS_BDJ.DAL
             );
         }
 
+        public static IEnumerable<TimetableRecord> FindAllTimetableRecords()
+        {
+            return _bdjContext.TimetableRecords.AsEnumerable();
+        }
+
         #endregion
 
         #region User Queries

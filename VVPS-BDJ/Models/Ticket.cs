@@ -2,11 +2,11 @@
 {
     public class Ticket
     {
-        public int? TicketId { get; private set; }
-        public string FromCity { get; private set; }
-        public string ToCity { get; private set; }
-        public bool IsTwoWay { get; private set; }
-        public bool ChildUnder16Present { get; private set; }
+        public int? TicketId { get; set; }
+        public string FromCity { get; set; }
+        public string ToCity { get; set; }
+        public bool IsTwoWay { get; set; }
+        public bool ChildUnder16Present { get; set; }
 
         public DateTime DepartureDate { get; set; }
 
@@ -14,7 +14,7 @@
 
         public double? Price { get; set; }
 
-        public Ticket() {}
+        public Ticket() { }
 
         public Ticket(
             int? ticketId, string fromCity, string toCity,

@@ -1,5 +1,7 @@
 using VVPS_BDJ.Models;
 using VVPS_BDJ.Views;
+using VVPS_BDJ.DAL;
+using VVPS_BDJ.Utils;
 
 namespace VVPS_BDJ.Controllers;
 
@@ -23,6 +25,12 @@ public class TicketReservationController
         _ticketReservationView = new TicketReservationView(menuItems);
     }
 
+    private void ReturnToMenu()
+    {
+        _ticketReservationView.DisplayPause();
+        _ticketReservationView.DisplayReservationMenu();
+    }
+
     public void ShowReservationMenu()
     {
         _ticketReservationView.DisplayReservationMenu();
@@ -35,8 +43,42 @@ public class TicketReservationController
 
     private void CreateReservation()
     {
-        throw new NotImplementedException();
+        IEnumerable<TimetableRecord> timetable = BDJService.FindAllTimetableRecords();
+        List<Ticket> tickets = new();
+
+        do
+        {
+            TimetableRecord? selectedRecord = _ticketReservationView.DisplayTimetable(timetable);
+            if (selectedRecord == null)
+            {
+                ReturnToMenu();
+                return;
+            }
+
+            Ticket ticket = _ticketReservationView.DisplayTicketForm(selectedRecord);
+            tickets.Add(ticket);
+        } while (_ticketReservationView.PromptUserForMoreTickets());
+
+        bool confirmReservation = _ticketReservationView.PromptUserForConfirmation();
+        if (confirmReservation)
+        {
+            User? currentUser = (User?)SessionStorage.GetItem("CurrentUser");
+            int currentUserId = currentUser?.UserId ?? 0;
+
+            Reservation reservation = TicketReservation.ReserveTickets(
+                tickets,
+                DateTime.Now,
+                currentUserId
+            );
+
+
+            BDJService.AddReservation(reservation);
+        }
+
+        ReturnToMenu();
     }
+
+
 
     private void UpdateReservation()
     {
@@ -53,7 +95,6 @@ public class TicketReservationController
 
     private void GoBack()
     {
-        new MainController()
-        .ShowMainMenu();
+        new MainController().ShowMainMenu();
     }
 }

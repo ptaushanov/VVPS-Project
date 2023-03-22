@@ -16,7 +16,7 @@ namespace VVPS.UnitTests
 
             // Act & Assert
             Assert.Throws<ArgumentNullException>(
-                () => TicketReservation.ReserveTickets(null, reservationDate)
+                () => TicketReservation.ReserveTickets(null, reservationDate, 0)
             );
         }
 
@@ -36,7 +36,7 @@ namespace VVPS.UnitTests
 
             // Act & Assert
             Assert.Throws<ArgumentException>(
-                () => TicketReservation.ReserveTickets(tickets, reservationDate)
+                () => TicketReservation.ReserveTickets(tickets, reservationDate, 0)
             );
         }
 
@@ -55,7 +55,7 @@ namespace VVPS.UnitTests
             DateTime reservationDate = new(2019, 9, 23);
 
             // Act
-            var reservation = TicketReservation.ReserveTickets(tickets, reservationDate);
+            var reservation = TicketReservation.ReserveTickets(tickets, reservationDate, 0);
 
             // Assert
             Assert.That(reservation, Is.Not.Null);
