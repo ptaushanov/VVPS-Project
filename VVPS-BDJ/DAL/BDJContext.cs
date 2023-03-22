@@ -23,9 +23,58 @@ namespace VVPS_BDJ.DAL
         {
             base.OnModelCreating(modelBuilder);
 
+            // Seeded data
             User defaultAdminUser =
                 new(1, "Admin", "Admin", "admin", "admin", DateTime.MinValue, true);
             modelBuilder.Entity<User>().HasData(defaultAdminUser);
+
+            modelBuilder
+                .Entity<TimetableRecord>()
+                .HasData(
+                    new TimetableRecord(
+                        1,
+                        "Sofia",
+                        "Plovdiv",
+                        new TimeOnly(8, 0),
+                        new TimeOnly(10, 0)
+                    ),
+                    new TimetableRecord(
+                        2,
+                        "Sofia",
+                        "Varna",
+                        new TimeOnly(10, 0),
+                        new TimeOnly(12, 0)
+                    ),
+                    new TimetableRecord(
+                        3,
+                        "Sofia",
+                        "Burgas",
+                        new TimeOnly(12, 0),
+                        new TimeOnly(14, 0)
+                    ),
+                    new TimetableRecord(
+                        4,
+                        "Sofia",
+                        "Plovdiv",
+                        new TimeOnly(14, 0),
+                        new TimeOnly(16, 0)
+                    ),
+                    new TimetableRecord(
+                        5,
+                        "Varna",
+                        "Sofia",
+                        new TimeOnly(16, 0),
+                        new TimeOnly(18, 0)
+                    ),
+                    new TimetableRecord(
+                        6,
+                        "Varna",
+                        "Burgas",
+                        new TimeOnly(18, 0),
+                        new TimeOnly(20, 0)
+                    )
+                );
+
             modelBuilder
                 .Entity<User>()
                 .HasOne(user => user.DiscountCard)

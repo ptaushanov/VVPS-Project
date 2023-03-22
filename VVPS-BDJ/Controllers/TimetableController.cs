@@ -57,10 +57,10 @@ public class TimetableController
     private void SearchByDepartureTime()
     {
         TimeOnly departureTimeMin = _timetableView.DisplayTimeSearchInput(
-            "Enter the minimum departure time:"
+            "Minimum departure time: "
         );
         TimeOnly departureTimeMax = _timetableView.DisplayTimeSearchInput(
-            "Enter the maximum departure time:"
+            "Maximum departure time: "
         );
         IEnumerable<TimetableRecord> timetableRecords =
             BDJService.FindTimetableRecordByDepartureTime(departureTimeMin, departureTimeMax);
@@ -72,10 +72,10 @@ public class TimetableController
     private void SearchByArrivalTime()
     {
         TimeOnly arrivalTimeMin = _timetableView.DisplayTimeSearchInput(
-            "Enter the minimum arrival time:"
+            "Minimum arrival time: "
         );
         TimeOnly arrivalTimeMax = _timetableView.DisplayTimeSearchInput(
-            "Enter the maximum arrival time:"
+            "Maximum arrival time: "
         );
         IEnumerable<TimetableRecord> timetableRecords = BDJService.FindTimetableRecordByArrivalTime(
             arrivalTimeMin,
@@ -89,7 +89,7 @@ public class TimetableController
     private void SearchByArrivalLocation()
     {
         string arrivalLocation = _timetableView.DisplayLocationSearchInput(
-            "Enter the arrival location:"
+            "Arrival location: "
         );
 
         IEnumerable<TimetableRecord> timetableRecords =
@@ -102,7 +102,7 @@ public class TimetableController
     private void SearchByDepartureLocation()
     {
         string departureLocation = _timetableView.DisplayLocationSearchInput(
-            "Enter the departure location:"
+            "Departure location: "
         );
 
         IEnumerable<TimetableRecord> timetableRecords =

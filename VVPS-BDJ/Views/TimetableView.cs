@@ -11,7 +11,7 @@ public class TimetableView : View
     public TimetableView(
         IEnumerable<KeyValuePair<string, Action>> locationSearchMenuItems,
         IEnumerable<KeyValuePair<string, Action>> timeSearchMenuItems
-        )
+    )
     {
         _locationSearchMenuItems = locationSearchMenuItems;
         _timeSearchMenuItems = timeSearchMenuItems;
@@ -32,36 +32,46 @@ public class TimetableView : View
     public string DisplayLocationSearchInput(string inputMessage)
     {
         Console.Clear();
-        Console.WriteLine(inputMessage);
+        Console.Write(inputMessage);
         return Console.ReadLine() ?? string.Empty;
     }
 
     public TimeOnly DisplayTimeSearchInput(string inputMessage)
     {
         Console.Clear();
-        Console.WriteLine(inputMessage);
-        return TimeOnly.Parse(Console.ReadLine() ?? string.Empty);
+        Console.Write(inputMessage);
+        TimeOnly time;
+        string? timeAsString = Console.ReadLine();
+        bool isParsedSuccessfully = TimeOnly.TryParse(timeAsString, out time);
+
+        while (!isParsedSuccessfully)
+        {
+            Console.WriteLine("Invalid time format. Please try again.");
+            Console.Write(inputMessage);
+            timeAsString = Console.ReadLine();
+            isParsedSuccessfully = TimeOnly.TryParse(timeAsString, out time);
+        }
+
+        return time;
     }
 
-    private string FormatTimetableRecord(TimetableRecord timetableRecord)
+    private void DisplaySingleTimetableRecord(TimetableRecord timetableRecord)
     {
-        string formattedTimetableRecord =
-            $"Departure Time: {timetableRecord.DepartureTime}" +
-            $"Arrival Time: {timetableRecord.ArrivalTime}" +
-            $"Departure Location: {timetableRecord.DepartureLocation}" +
-            $"Arrival Location: {timetableRecord.ArrivalLocation}";
-        return formattedTimetableRecord;
+        Console.WriteLine("###########################################");
+        Console.WriteLine(
+            $"Departure Time: {timetableRecord.DepartureTime}{Environment.NewLine}"
+                + $"Arrival Time: {timetableRecord.ArrivalTime}{Environment.NewLine}"
+                + $"Departure Location: {timetableRecord.DepartureLocation}{Environment.NewLine}"
+                + $"Arrival Location: {timetableRecord.ArrivalLocation}"
+        );
+        Console.WriteLine("###########################################" + Environment.NewLine);
     }
 
     public void DisplayTimetableRecords(IEnumerable<TimetableRecord> timetableRecords)
     {
-        Console.WriteLine("Timetable records:");
-        timetableRecords
-            .ToList()
-            .ForEach(timetableRecord =>
-            {
-                Console.WriteLine(FormatTimetableRecord(timetableRecord));
-                Console.WriteLine();
-            });
+        Console.Clear();
+        Console.WriteLine("[Timetable records]" + Environment.NewLine);
+
+        timetableRecords.ToList().ForEach(DisplaySingleTimetableRecord);
     }
 }
