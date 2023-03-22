@@ -10,6 +10,9 @@
         public DateTime DateOfBirth { get; set; }
 
         public bool IsAdmin { get; set; }
+
+        public int? DiscountCardId { get; set; }
+
         public DiscountCard? DiscountCard { get; set; }
 
         public User() { }

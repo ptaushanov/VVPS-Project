@@ -23,8 +23,14 @@ namespace VVPS_BDJ.DAL
         {
             base.OnModelCreating(modelBuilder);
 
-            User defaultAdminUser = new(1, "Admin", "Admin", "admin", "admin", DateTime.MinValue, true); 
+            User defaultAdminUser =
+                new(1, "Admin", "Admin", "admin", "admin", DateTime.MinValue, true);
             modelBuilder.Entity<User>().HasData(defaultAdminUser);
+            modelBuilder
+                .Entity<User>()
+                .HasOne(user => user.DiscountCard)
+                .WithOne()
+                .HasForeignKey<User>(user => user.DiscountCardId);
         }
     }
 }
