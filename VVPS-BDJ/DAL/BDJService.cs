@@ -15,8 +15,8 @@ namespace VVPS_BDJ.DAL
             _bdjContext.SaveChanges();
         }
 
-        public static IEnumerable<Reservation> FindAllReservations() =>
-            _bdjContext.Reservations.AsEnumerable();
+        public static IEnumerable<Reservation> FindAllUserReservations(int userId) =>
+            _bdjContext.Reservations.Where(reservation => reservation.UserId == userId);
 
         public static void ChangeReservation() => _bdjContext.SaveChanges();
 

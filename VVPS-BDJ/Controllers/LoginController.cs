@@ -33,7 +33,10 @@ public class LoginController
         User? user = FindUserByCredentials(loginCredentials);
 
         while (user == null)
+        {
             loginCredentials = ShowLoginScreenAfterFailedLogin();
+            user = FindUserByCredentials(loginCredentials);
+        }
 
         SessionStorage.SetItem("Current-User", user);
         new MainController().ShowMainMenu();

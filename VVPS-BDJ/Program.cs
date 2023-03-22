@@ -3,9 +3,9 @@ using VVPS_BDJ.Controllers;
 
 Console.OutputEncoding = Encoding.Unicode;
 // PRODUCTION CODE:
-// LoginController loginController = new();
-// loginController.LogIn();
+LoginController loginController = new();
+loginController.LogIn();
 
 // TEST CODE:
-MainController mainController = new();
-mainController.ShowMainMenu();
+// MainController mainController = new();
+// mainController.ShowMainMenu();

@@ -15,8 +15,8 @@ public class TicketReservationController
         Dictionary<string, Action> menuItems =
             new()
             {
-                { "Create new reservation", () => CreateReservation() },
                 { "View my reservations", () => ViewReservations() },
+                { "Create new reservation", () => CreateReservation() },
                 { "Update reservation", () => UpdateReservation() },
                 { "Cancel reservation", () => CancelReservation() },
                 { "Go back", () => GoBack() },
@@ -38,7 +38,19 @@ public class TicketReservationController
 
     private void ViewReservations()
     {
-        throw new NotImplementedException();
+        User? currentUser = (User?)SessionStorage.GetItem("Current-User");
+        int? currentUserId = currentUser?.UserId;
+
+        if (currentUserId == null)
+        {
+            Console.WriteLine("You are not logged in.");
+            ReturnToMenu();
+            return;
+        }
+
+        IEnumerable<Reservation> reservations = BDJService.FindAllUserReservations((int)currentUserId);
+        _ticketReservationView.DisplayUserReservations(reservations);
+        ReturnToMenu();
     }
 
     private void CreateReservation()
@@ -62,7 +74,7 @@ public class TicketReservationController
         bool confirmReservation = _ticketReservationView.PromptUserForConfirmation();
         if (confirmReservation)
         {
-            User? currentUser = (User?)SessionStorage.GetItem("CurrentUser");
+            User? currentUser = (User?)SessionStorage.GetItem("Current-User");
             int currentUserId = currentUser?.UserId ?? 0;
 
             Reservation reservation = TicketReservation.ReserveTickets(
@@ -71,14 +83,11 @@ public class TicketReservationController
                 currentUserId
             );
 
-
             BDJService.AddReservation(reservation);
         }
 
         ReturnToMenu();
     }
-
-
 
     private void UpdateReservation()
     {

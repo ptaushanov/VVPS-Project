@@ -21,8 +21,8 @@ public class TicketReservationView : View
     private string FormatTimetableRecord(TimetableRecord record)
     {
         string formattedRecord =
-          $"{record.DepartureLocation} -> {record.ArrivalLocation} | " +
-            $"{record.DepartureTime} -> {record.ArrivalTime}";
+            $"{record.DepartureLocation} -> {record.ArrivalLocation} | "
+            + $"{record.DepartureTime} -> {record.ArrivalTime}";
         return formattedRecord;
     }
 
@@ -30,13 +30,20 @@ public class TicketReservationView : View
     {
         TimetableRecord? selectedRecord = null;
 
-        ConsoleMenu timetableMenu = new(
-            timetable.Select(record => new KeyValuePair<string, Action>(
-                FormatTimetableRecord(record),
-                () => { selectedRecord = record; }
-            )),
-            "Select train from timetable"
-        );
+        ConsoleMenu timetableMenu =
+            new(
+                timetable.Select(
+                    record =>
+                        new KeyValuePair<string, Action>(
+                            FormatTimetableRecord(record),
+                            () =>
+                            {
+                                selectedRecord = record;
+                            }
+                        )
+                ),
+                "Select train from timetable"
+            );
 
         timetableMenu.Show();
 
@@ -102,4 +109,46 @@ public class TicketReservationView : View
         return ticket;
     }
 
+    private string FormatTicket(Ticket ticket)
+    {
+        string formattedTicket =
+            Environment.NewLine
+            + $"From: {ticket.FromCity}{Environment.NewLine}"
+            + $"To: {ticket.ToCity}{Environment.NewLine}"
+            + $"Departure date: {ticket.DepartureDate}{Environment.NewLine}"
+            + $"Is two-way: {ticket.IsTwoWay}{Environment.NewLine}"
+            + $"Child under 16 present: {ticket.ChildUnder16Present}{Environment.NewLine}";
+
+        return formattedTicket;
+    }
+
+    private string FormatReservation(Reservation reservation)
+    {
+        string reservationStatus = reservation.Canceled ? "Canceled" : "Active";
+        string formattedReservation =
+            "###########################################"
+            + Environment.NewLine
+            + $"Reserved on: {reservation.ReservedOn}{Environment.NewLine}"
+            + $"Status: {reservationStatus}"
+            + Environment.NewLine
+            + string.Join(
+                Environment.NewLine,
+                reservation.ReservedTickets.Select(ticket => FormatTicket(ticket))
+            )
+            + "###########################################"
+            + Environment.NewLine;
+
+        return formattedReservation;
+    }
+
+    public void DisplayUserReservations(IEnumerable<Reservation> reservations)
+    {
+        Console.Clear();
+        Console.WriteLine("[Your reservations]" + Environment.NewLine);
+
+        reservations
+            .Select(reservation => FormatReservation(reservation))
+            .ToList()
+            .ForEach(Console.WriteLine);
+    }
 }
