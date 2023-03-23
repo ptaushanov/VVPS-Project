@@ -46,9 +46,13 @@ public class TicketReservationView : View
         return selectedRecord;
     }
 
-    private DateOnly TakeDepartureDate(string dateOfBirthString, TimeOnly departureTime)
+    public DateTime TakeDepartureDate(TimeOnly departureTime)
     {
-        bool isDateCorrect = DateOnly.TryParse(dateOfBirthString, out DateOnly departureDate);
+        Console.WriteLine();
+        Console.Write("Departure date (dd.mm.yyyy): ");
+        string departureDateString = Console.ReadLine() ?? string.Empty;
+
+        bool isDateCorrect = DateOnly.TryParse(departureDateString, out DateOnly departureDate);
         if (isDateCorrect)
             isDateCorrect = departureDate.ToDateTime(departureTime) > DateTime.Now;
 
@@ -56,13 +60,13 @@ public class TicketReservationView : View
         {
             Console.WriteLine("Invalid departure date. Please try again.");
             Console.Write("Departure date (dd.mm.yyyy): ");
-            dateOfBirthString = Console.ReadLine() ?? string.Empty;
-            isDateCorrect = DateOnly.TryParse(dateOfBirthString, out departureDate);
+            departureDateString = Console.ReadLine() ?? string.Empty;
+            isDateCorrect = DateOnly.TryParse(departureDateString, out departureDate);
             if (isDateCorrect)
                 isDateCorrect = departureDate.ToDateTime(departureTime) > DateTime.Now;
         }
 
-        return departureDate;
+        return departureDate.ToDateTime(departureTime);
     }
 
     public bool PromptUserForMoreTickets()
@@ -91,12 +95,8 @@ public class TicketReservationView : View
             ToCity = selectedRecord.ArrivalLocation
         };
 
-        Console.WriteLine();
-        Console.Write("Departure date (dd.mm.yyyy): ");
-        string departureDateAsString = Console.ReadLine() ?? string.Empty;
-        DateOnly departureDate = TakeDepartureDate(departureDateAsString, selectedRecord.DepartureTime);
-
-        ticket.DepartureDate = departureDate.ToDateTime(selectedRecord.DepartureTime);
+        DateTime departureDate = TakeDepartureDate(selectedRecord.DepartureTime);
+        ticket.DepartureDate = departureDate;
 
         Console.Write("Is the ticket two-way? (y/N) ");
         ticket.IsTwoWay = Console.ReadLine() == "y";
@@ -186,5 +186,49 @@ public class TicketReservationView : View
         string answer = Console.ReadLine() ?? string.Empty;
         bool isConfirmed = answer == "y";
         return isConfirmed;
+    }
+
+    private string FormatTicketForSelecting(Ticket ticket)
+    {
+        string formattedTicket =
+            $"{ticket.FromCity} -> {ticket.ToCity} | " +
+            $"Departure date: {ticket.DepartureDate}";
+        return formattedTicket;
+    }
+    public Ticket? DisplayTicketSelectMenu(IEnumerable<Ticket> tickets)
+    {
+        Ticket? selectedTicket = null;
+
+        ConsoleMenu ticketSelectMenu =
+            new(tickets.Select(
+                ticket =>
+                    new KeyValuePair<string, Action>(
+                        FormatTicketForSelecting(ticket),
+                        () => selectedTicket = ticket
+                    )
+                ),
+                "Select ticket"
+            );
+
+        ticketSelectMenu.Show();
+        return selectedTicket;
+    }
+
+    public bool PromptForMoreTicketUpdates()
+    {
+        Console.WriteLine();
+        Console.Write("Do you want to update more tickets? (y/N) ");
+        string answer = Console.ReadLine() ?? string.Empty;
+
+        return answer == "y";
+    }
+
+    public bool PromptForUpdateConfirmation()
+    {
+        Console.WriteLine();
+        Console.Write("Confirm update? (y/N) ");
+        string answer = Console.ReadLine() ?? string.Empty;
+
+        return answer == "y";
     }
 }

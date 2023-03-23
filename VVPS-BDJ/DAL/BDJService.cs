@@ -60,6 +60,17 @@ namespace VVPS_BDJ.DAL
             );
         }
 
+        public static IEnumerable<TimetableRecord> FindTimetableRecordByLocations(
+            string departureLocation,
+            string arrivalLocation
+        )
+        {
+            return _bdjContext.TimetableRecords.Where(
+                record => record.DepartureLocation == departureLocation &&
+                    record.ArrivalLocation == arrivalLocation
+            );
+        }
+
         public static IEnumerable<TimetableRecord> FindTimetableRecordByDepartureTime(
             TimeOnly minTime,
             TimeOnly maxTime

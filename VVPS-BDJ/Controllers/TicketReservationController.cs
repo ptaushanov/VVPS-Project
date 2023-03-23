@@ -96,9 +96,68 @@ public class TicketReservationController
         ReturnToMenu();
     }
 
+    private void UpdateSingleTicket(Reservation selectedReservation)
+    {
+        Ticket? selectedTicket = _ticketReservationView.DisplayTicketSelectMenu(
+                selectedReservation.ReservedTickets
+            );
+
+        if (selectedTicket == null)
+        {
+            ReturnToMenu();
+            return;
+        }
+
+        IEnumerable<TimetableRecord> timetable = BDJService.FindTimetableRecordByLocations(
+            selectedTicket.FromCity,
+            selectedTicket.ToCity
+        );
+
+        TimetableRecord? selectedRecord = _ticketReservationView.DisplayTimetable(timetable);
+        if (selectedRecord == null)
+        {
+            ReturnToMenu();
+            return;
+        }
+
+        DateTime newDepartureDate = _ticketReservationView.TakeDepartureDate(
+            selectedRecord.DepartureTime
+        );
+
+        bool confirmUpdate = _ticketReservationView.PromptForUpdateConfirmation();
+
+        if (confirmUpdate)
+        {
+            selectedTicket.DepartureDate = newDepartureDate;
+            BDJService.ChangeReservation();
+        }
+    }
+
     private void UpdateReservation()
     {
-        throw new NotImplementedException();
+        IEnumerable<Reservation>? reservations = GetCurrentUserReservations();
+        if (reservations == null || reservations.Count() == 0)
+        {
+            ReturnToMenu();
+            return;
+        }
+
+        Reservation? selectedReservation = _ticketReservationView.DisplayReservationSelectMenu(
+            reservations
+        );
+
+        if (selectedReservation == null)
+        {
+            ReturnToMenu();
+            return;
+        }
+
+        do
+        {
+            UpdateSingleTicket(selectedReservation);
+        } while (_ticketReservationView.PromptForMoreTicketUpdates());
+
+        ReturnToMenu();
     }
 
     private void CancelReservation()
@@ -110,8 +169,9 @@ public class TicketReservationController
             return;
         }
 
-        Reservation? selectedReservation =
-            _ticketReservationView.DisplayReservationSelectMenu(reservations);
+        Reservation? selectedReservation = _ticketReservationView.DisplayReservationSelectMenu(
+            reservations
+        );
 
         if (selectedReservation == null)
         {
