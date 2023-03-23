@@ -8,7 +8,7 @@
 
         protected DiscountCard() { }
 
-        public DiscountCard(int? discountCardId)
+        protected DiscountCard(int? discountCardId)
         {
             DiscountCardId = discountCardId;
         }

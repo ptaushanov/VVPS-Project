@@ -63,7 +63,7 @@ public class TimetableController
             "Maximum departure time: "
         );
         IEnumerable<TimetableRecord> timetableRecords =
-            BDJService.FindTimetableRecordByDepartureTime(departureTimeMin, departureTimeMax);
+            BdjService.FindTimetableRecordByDepartureTime(departureTimeMin, departureTimeMax);
 
         _timetableView.DisplayTimetableRecords(timetableRecords);
         ReturnToSearchByTimeMenu();
@@ -77,7 +77,7 @@ public class TimetableController
         TimeOnly arrivalTimeMax = _timetableView.DisplayTimeSearchInput(
             "Maximum arrival time: "
         );
-        IEnumerable<TimetableRecord> timetableRecords = BDJService.FindTimetableRecordByArrivalTime(
+        IEnumerable<TimetableRecord> timetableRecords = BdjService.FindTimetableRecordByArrivalTime(
             arrivalTimeMin,
             arrivalTimeMax
         );
@@ -93,7 +93,7 @@ public class TimetableController
         );
 
         IEnumerable<TimetableRecord> timetableRecords =
-            BDJService.FindTimetableRecordByArrivalLocation(arrivalLocation);
+            BdjService.FindTimetableRecordByArrivalLocation(arrivalLocation);
 
         _timetableView.DisplayTimetableRecords(timetableRecords);
         ReturnToSearchByLocationMenu();
@@ -106,7 +106,7 @@ public class TimetableController
         );
 
         IEnumerable<TimetableRecord> timetableRecords =
-            BDJService.FindTimetableRecordByDepartureLocation(departureLocation);
+            BdjService.FindTimetableRecordByDepartureLocation(departureLocation);
 
         _timetableView.DisplayTimetableRecords(timetableRecords);
         ReturnToSearchByLocationMenu();

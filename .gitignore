@@ -354,3 +354,4 @@ MigrationBackup/
 
 # Vistual Studio code
 /.vscode
+/.editorconfig

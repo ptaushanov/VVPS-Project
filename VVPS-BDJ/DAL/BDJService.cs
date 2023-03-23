@@ -3,9 +3,9 @@ using VVPS_BDJ.Models;
 
 namespace VVPS_BDJ.DAL
 {
-    public class BDJService
+    public static class BdjService
     {
-        private static readonly BDJContext _bdjContext = new();
+        private static readonly BdjContext _bdjContext = new();
 
         #region Reservation Queries
 

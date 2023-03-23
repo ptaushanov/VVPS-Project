@@ -15,7 +15,13 @@
 
         public DiscountCard? DiscountCard { get; set; }
 
-        public User() { }
+        public User()
+        {
+            FirstName = string.Empty;
+            LastName = string.Empty;
+            Username = string.Empty;
+            Password = string.Empty;
+        }
 
         public User(
             int userId,

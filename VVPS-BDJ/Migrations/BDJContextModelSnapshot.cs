@@ -9,7 +9,7 @@ using VVPS_BDJ.DAL;
 
 namespace VVPS_BDJ.Migrations
 {
-    [DbContext(typeof(BDJContext))]
+    [DbContext(typeof(BdjContext))]
     partial class BDJContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

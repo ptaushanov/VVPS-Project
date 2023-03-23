@@ -8,6 +8,16 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>9999</WarningLevel>
+    <NoWarn>1701;1702;1822;</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <WarningLevel>9999</WarningLevel>
+    <NoWarn>1701;1702;1822;</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.4">

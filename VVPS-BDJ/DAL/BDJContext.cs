@@ -3,7 +3,7 @@ using VVPS_BDJ.Models;
 
 namespace VVPS_BDJ.DAL
 {
-    public class BDJContext : DbContext
+    public class BdjContext : DbContext
     {
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Reservation> Reservations { get; set; }

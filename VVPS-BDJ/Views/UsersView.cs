@@ -123,9 +123,6 @@ public class UsersView : View
     public int? DisplayUserSelectMenu(IEnumerable<User> users)
     {
         int? selectedIndexOfUser = null;
-
-        Action<User> HandleSelectAction = (user) => { };
-
         ConsoleMenu userSelectMenu = new("Select user to update");
 
         users

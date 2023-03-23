@@ -10,7 +10,10 @@
 
         public bool Canceled { get; set; }
 
-        public Reservation() { }
+        public Reservation()
+        {
+            ReservedTickets = Enumerable.Empty<Ticket>();
+        }
 
         public Reservation(
             int? reservationId,

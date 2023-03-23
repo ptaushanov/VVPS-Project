@@ -32,7 +32,7 @@ public class UsersController
 
     private void ListAllUsers()
     {
-        IEnumerable<User> users = BDJService.FindAllUsers();
+        IEnumerable<User> users = BdjService.FindAllUsers();
         _usersView.DisplayUserList(users);
         ReturnToMenu();
     }
@@ -40,14 +40,14 @@ public class UsersController
     private void CreateNewUser()
     {
         User newUser = _usersView.DisplayCreateUserForm();
-        BDJService.AddUser(newUser);
+        BdjService.AddUser(newUser);
         ReturnToMenu();
     }
 
     private void UpdateUser()
     {
         // Get user ID after displaying list of users
-        IEnumerable<User> users = BDJService.FindAllUsers();
+        IEnumerable<User> users = BdjService.FindAllUsers();
         int? userId = _usersView.DisplayUserSelectMenu(users);
 
         if (userId == null)
@@ -56,7 +56,7 @@ public class UsersController
             return;
         }
 
-        User? dbUser = BDJService.FindUserById((int)userId);
+        User? dbUser = BdjService.FindUserById((int)userId);
 
         if (dbUser == null)
         {
@@ -67,7 +67,7 @@ public class UsersController
         User user = _usersView.DisplayUpdateUserForm();
         dbUser.CopyProperties(user, skipEmptyValues: true);
 
-        BDJService.UpdateUser();
+        BdjService.UpdateUser();
         ReturnToMenu();
     }
 

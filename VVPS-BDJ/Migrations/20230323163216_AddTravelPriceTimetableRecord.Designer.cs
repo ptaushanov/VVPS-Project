@@ -10,7 +10,7 @@ using VVPS_BDJ.DAL;
 
 namespace VVPS_BDJ.Migrations
 {
-    [DbContext(typeof(BDJContext))]
+    [DbContext(typeof(BdjContext))]
     [Migration("20230323163216_AddTravelPriceTimetableRecord")]
     partial class AddTravelPriceTimetableRecord
     {

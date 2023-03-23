@@ -37,8 +37,7 @@ public class MainController
     {
         if (currentUser != null && currentUser.IsAdmin)
         {
-            Dictionary<string, Action> adminMenuItems = new();
-            adminMenuItems = menuItems
+            Dictionary<string, Action> adminMenuItems = menuItems
                 .Take(2)
                 .Append(menuItems.Last())
                 .ToDictionary(mItem => mItem.Key, mItem => mItem.Value);

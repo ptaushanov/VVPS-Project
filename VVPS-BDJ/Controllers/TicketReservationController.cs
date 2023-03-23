@@ -25,6 +25,9 @@ public class TicketReservationController
         _ticketReservationView = new TicketReservationView(menuItems);
     }
 
+    public TicketReservationController(TicketReservationView ticketReservationView) =>
+        _ticketReservationView = ticketReservationView;
+
     private void ReturnToMenu()
     {
         _ticketReservationView.DisplayPause();
@@ -36,7 +39,7 @@ public class TicketReservationController
         _ticketReservationView.DisplayReservationMenu();
     }
 
-    private IEnumerable<Reservation>? GetCurrentUserReservations(bool includeCanceled = false)
+    private IEnumerable<Reservation> GetCurrentUserReservations(bool includeCanceled = false)
     {
         User? currentUser = (User?)SessionStorage.GetItem("Current-User");
         int? currentUserId = currentUser?.UserId;
@@ -44,10 +47,10 @@ public class TicketReservationController
         if (currentUserId == null)
         {
             ReturnToMenu();
-            return null;
+            return Enumerable.Empty<Reservation>();
         }
 
-        return BDJService.FindAllUserReservations((int)currentUserId, includeCanceled);
+        return BdjService.FindAllUserReservations((int)currentUserId, includeCanceled);
     }
 
     private void ViewReservations()
@@ -60,7 +63,7 @@ public class TicketReservationController
 
     private void CreateReservation()
     {
-        IEnumerable<TimetableRecord> timetable = BDJService.FindAllTimetableRecords();
+        IEnumerable<TimetableRecord> timetable = BdjService.FindAllTimetableRecords();
         List<Ticket> tickets = new();
 
         do
@@ -90,7 +93,7 @@ public class TicketReservationController
                 currentUserId
             );
 
-            BDJService.AddReservation(reservation);
+            BdjService.AddReservation(reservation);
         }
 
         ReturnToMenu();
@@ -108,7 +111,7 @@ public class TicketReservationController
             return;
         }
 
-        IEnumerable<TimetableRecord> timetable = BDJService.FindTimetableRecordByLocations(
+        IEnumerable<TimetableRecord> timetable = BdjService.FindTimetableRecordByLocations(
             selectedTicket.FromCity,
             selectedTicket.ToCity
         );
@@ -129,14 +132,14 @@ public class TicketReservationController
         if (confirmUpdate)
         {
             selectedTicket.DepartureDate = newDepartureDate;
-            BDJService.ChangeReservation();
+            BdjService.ChangeReservation();
         }
     }
 
     private void UpdateReservation()
     {
-        IEnumerable<Reservation>? reservations = GetCurrentUserReservations();
-        if (reservations == null || reservations.Count() == 0)
+        IEnumerable<Reservation> reservations = GetCurrentUserReservations();
+        if (!reservations.Any())
         {
             ReturnToMenu();
             return;
@@ -162,8 +165,8 @@ public class TicketReservationController
 
     private void CancelReservation()
     {
-        IEnumerable<Reservation>? reservations = GetCurrentUserReservations();
-        if (reservations == null || reservations.Count() == 0)
+        IEnumerable<Reservation> reservations = GetCurrentUserReservations();
+        if (!reservations.Any())
         {
             ReturnToMenu();
             return;
@@ -183,14 +186,11 @@ public class TicketReservationController
         if (confirmCancellation)
         {
             selectedReservation.Canceled = true;
-            BDJService.ChangeReservation();
+            BdjService.ChangeReservation();
         }
 
         ReturnToMenu();
     }
-
-    public TicketReservationController(TicketReservationView ticketReservationView) =>
-        _ticketReservationView = ticketReservationView;
 
     private void GoBack()
     {

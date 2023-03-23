@@ -21,7 +21,7 @@ public class LoginController
 
     private User? FindUserByCredentials(LoginCredentials loginCredentials)
     {
-        return BDJService.FindUserByUsernameAndPassword(
+        return BdjService.FindUserByUsernameAndPassword(
             loginCredentials.Username,
             loginCredentials.Password
         );

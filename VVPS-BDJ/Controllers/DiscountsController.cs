@@ -29,12 +29,6 @@ public class DiscountsController
         };
     }
 
-    private void ReturnToMenu()
-    {
-        _discountsView.DisplayPause();
-        _discountsView.DisplayDiscountsMenu();
-    }
-
     public DiscountsController(DiscountsView usersView)
     {
         _discountsView = usersView;
@@ -50,18 +44,24 @@ public class DiscountsController
         _discountCardTypesForUser = discountCardTypesForUser;
     }
 
+    private void ReturnToMenu()
+    {
+        _discountsView.DisplayPause();
+        _discountsView.DisplayDiscountsMenu();
+    }
+
     public void ShowDiscountsMenu() => _discountsView.DisplayDiscountsMenu();
 
     private void ViewDiscountCardsPerUser()
     {
         _discountsView
-            .DisplayUserDiscountCards(BDJService.FindAllUsers());
+            .DisplayUserDiscountCards(BdjService.FindAllUsers());
         ReturnToMenu();
     }
 
     private void AddOrChangeDiscountCard()
     {
-        IEnumerable<User> users = BDJService.FindAllUsers();
+        IEnumerable<User> users = BdjService.FindAllUsers();
         int? userId = _discountsView.DisplayUserSelectMenu(users);
 
         if (userId == null)
@@ -70,7 +70,7 @@ public class DiscountsController
             return;
         }
 
-        User? user = BDJService.FindUserById((int)userId);
+        User? user = BdjService.FindUserById((int)userId);
 
         if (user == null)
         {
@@ -116,16 +116,16 @@ public class DiscountsController
                 return;
         }
 
-        BDJService.AddDiscountCard(discountCard);
+        BdjService.AddDiscountCard(discountCard);
         user.DiscountCard = discountCard;
-        BDJService.UpdateUser();
+        BdjService.UpdateUser();
 
         ReturnToMenu();
     }
 
     private void RevokeDiscountCard()
     {
-        IEnumerable<User> users = BDJService.FindAllUsers();
+        IEnumerable<User> users = BdjService.FindAllUsers();
         int? userId = _discountsView.DisplayUserDiscountCardSelectMenu(users);
 
         if (userId == null)
@@ -134,7 +134,7 @@ public class DiscountsController
             return;
         }
 
-        User? user = BDJService.FindUserById((int)userId);
+        User? user = BdjService.FindUserById((int)userId);
 
         if (user == null)
         {
@@ -148,9 +148,9 @@ public class DiscountsController
             return;
         }
 
-        BDJService.DeleteDiscountCard(user.DiscountCard);
+        BdjService.DeleteDiscountCard(user.DiscountCard);
         user.DiscountCard = null;
-        BDJService.UpdateUser();
+        BdjService.UpdateUser();
 
         ReturnToMenu();
     }

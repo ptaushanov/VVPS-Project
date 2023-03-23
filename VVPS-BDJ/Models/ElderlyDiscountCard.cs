@@ -2,7 +2,7 @@
 {
     public class ElderlyDiscountCard : DiscountCard
     {
-        private double _discountValue;
+        public override double DiscountValue { get; set; }
 
         public ElderlyDiscountCard() { }
 
@@ -12,10 +12,5 @@
             DiscountValue = 0.34;
         }
 
-        public override double DiscountValue
-        {
-            get => _discountValue;
-            set => _discountValue = value;
-        }
     }
 }

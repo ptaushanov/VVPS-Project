@@ -56,7 +56,7 @@ public static class TicketPricing
 
     public static double CalculateTotalPrice(Ticket ticket, double basePrice)
     {
-        var (fromCity, toCity, isTwoWay, discountCard, childUnder16Present, departureDate) = ticket;
+        var (isTwoWay, discountCard, childUnder16Present, departureDate) = ticket;
         double finalTicketPrice;
 
         finalTicketPrice =

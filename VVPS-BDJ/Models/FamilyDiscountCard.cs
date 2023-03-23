@@ -2,20 +2,14 @@
 {
     public class FamilyDiscountCard : DiscountCard
     {
-        private double _discountValue;
+        public override double DiscountValue { get; set; }
 
         public FamilyDiscountCard() { }
 
         public FamilyDiscountCard(int? id)
             : base(id)
         {
-            _discountValue = 0.1;
-        }
-
-        public override double DiscountValue
-        {
-            get => _discountValue;
-            set => _discountValue = value;
+            DiscountValue = 0.1;
         }
 
         public void ChangeDiscount(bool childUnder16Present)
