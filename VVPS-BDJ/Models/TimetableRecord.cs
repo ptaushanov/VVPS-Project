@@ -14,8 +14,8 @@
 
         public TimetableRecord() { }
         public TimetableRecord(
-            int? timetableRecordId, string departureLocation,
-            string arrivalLocation, TimeOnly departureTime, TimeOnly arrivalTime
+            int? timetableRecordId, string departureLocation, string arrivalLocation,
+             TimeOnly departureTime, TimeOnly arrivalTime, double travelPrice
         )
         {
             TimetableRecordId = timetableRecordId;
@@ -23,6 +23,7 @@
             ArrivalLocation = arrivalLocation;
             DepartureTime = departureTime;
             ArrivalTime = arrivalTime;
+            TravelPrice = travelPrice;
         }
     }
 }

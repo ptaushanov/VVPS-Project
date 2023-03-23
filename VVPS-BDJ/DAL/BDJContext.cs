@@ -36,42 +36,48 @@ namespace VVPS_BDJ.DAL
                         "Sofia",
                         "Plovdiv",
                         new TimeOnly(8, 0),
-                        new TimeOnly(10, 0)
+                        new TimeOnly(10, 0),
+                        10.0
                     ),
                     new TimetableRecord(
                         2,
                         "Sofia",
                         "Varna",
                         new TimeOnly(10, 0),
-                        new TimeOnly(12, 0)
+                        new TimeOnly(12, 0),
+                        15.35
                     ),
                     new TimetableRecord(
                         3,
                         "Sofia",
                         "Burgas",
                         new TimeOnly(12, 0),
-                        new TimeOnly(14, 0)
+                        new TimeOnly(14, 0),
+                        11.80
                     ),
                     new TimetableRecord(
                         4,
                         "Sofia",
                         "Plovdiv",
                         new TimeOnly(14, 0),
-                        new TimeOnly(16, 0)
+                        new TimeOnly(16, 0),
+                        9.90
                     ),
                     new TimetableRecord(
                         5,
                         "Varna",
                         "Sofia",
                         new TimeOnly(16, 0),
-                        new TimeOnly(18, 0)
+                        new TimeOnly(18, 0),
+                        15.35
                     ),
                     new TimetableRecord(
                         6,
                         "Varna",
                         "Burgas",
                         new TimeOnly(18, 0),
-                        new TimeOnly(20, 0)
+                        new TimeOnly(20, 0),
+                        14.50
                     )
                 );
 
