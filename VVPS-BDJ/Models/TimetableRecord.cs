@@ -1,5 +1,6 @@
 ﻿namespace VVPS_BDJ.Models
 {
+    // Basically a record that stores information about a train
     public class TimetableRecord
     {
         public int? TimetableRecordId { get; set; }
@@ -8,6 +9,8 @@
 
         public TimeOnly DepartureTime { get; set; }
         public TimeOnly ArrivalTime { get; set; }
+
+        public double TravelPrice { get; set; }
 
         public TimetableRecord() { }
         public TimetableRecord(

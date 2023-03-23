@@ -73,7 +73,7 @@ public class TicketReservationController
             }
 
             Ticket ticket = _ticketReservationView.DisplayTicketForm(selectedRecord);
-            // ticket.Price = TicketPricing.CalculateTotalPrice(ticket);
+            ticket.Price = TicketPricing.CalculateTotalPrice(ticket, selectedRecord.TravelPrice);
 
             tickets.Add(ticket);
         } while (_ticketReservationView.PromptUserForMoreTickets());

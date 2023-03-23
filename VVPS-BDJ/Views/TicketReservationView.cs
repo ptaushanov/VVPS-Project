@@ -115,7 +115,8 @@ public class TicketReservationView : View
             + $"To: {ticket.ToCity}{Environment.NewLine}"
             + $"Departure date: {ticket.DepartureDate}{Environment.NewLine}"
             + $"Is two-way: {ticket.IsTwoWay}{Environment.NewLine}"
-            + $"Child under 16 present: {ticket.ChildUnder16Present}{Environment.NewLine}";
+            + $"Child under 16 present: {ticket.ChildUnder16Present}{Environment.NewLine}"
+            + $"Price: {ticket.Price}{Environment.NewLine}";
 
         return formattedTicket;
     }

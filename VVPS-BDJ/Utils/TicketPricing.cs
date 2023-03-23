@@ -5,15 +5,8 @@ namespace VVPS_BDJ.Utils;
 
 public static class TicketPricing
 {
-    public static Dictionary<string, double>? PricingTable { private get; set; }
-
-    private static double CalculatePriceFromTimeOfDay(
-        string fromCity,
-        string toCity,
-        DateTime departureDate
-    )
+    private static double CalculatePriceFromTimeOfDay(double basePrice, DateTime departureDate)
     {
-        const string searchKeyFormat = "{0}-{1}";
         const double discountPercentage = 0.05;
 
         const string stringMorningTime = "9:30";
@@ -36,20 +29,6 @@ public static class TicketPricing
             CultureInfo.CurrentCulture
         );
 
-        string searchKey = string.Format(searchKeyFormat, fromCity, toCity);
-
-        if (PricingTable == null)
-        {
-            throw new NullReferenceException("PricingTable was null!");
-        }
-
-        if (!PricingTable.ContainsKey(searchKey))
-        {
-            throw new ArgumentException($"No price found for {searchKey}");
-        }
-
-        double basePrice = PricingTable[searchKey];
-
         bool isWithinTimeRange =
             departureDate.TimeOfDay > morningTime && departureDate.TimeOfDay < afternoonTime
             || departureDate.TimeOfDay > eveningTime;
@@ -61,44 +40,29 @@ public static class TicketPricing
     }
 
     private static double CalculatePriceFromDiscount(
-        string fromCity,
-        string toCity,
+        double basePrice,
         DiscountCard discountCard,
         bool childUnder16Present
     )
     {
-        const string searchKeyFormat = "{0}-{1}";
-        string searchKey = string.Format(searchKeyFormat, fromCity, toCity);
+        if (discountCard is FamilyDiscountCard familyDiscountCard)
+            familyDiscountCard.ChangeDiscount(childUnder16Present);
 
-        if (PricingTable == null)
-        {
-            throw new NullReferenceException("PricingTable was null!");
-        }
-
-        if (!PricingTable.ContainsKey(searchKey))
-        {
-            throw new ArgumentException($"No price found for {searchKey}");
-        }
-
-        if (discountCard is FamilyDiscountCard familyDiscoutCard)
-            familyDiscoutCard.ChangeDiscount(childUnder16Present);
-
-        double basePrice = PricingTable[searchKey];
-        double discontedPrice =
+        double discountedPrice =
             discountCard == null ? basePrice : basePrice * (1 - discountCard.DiscountValue);
 
-        return discontedPrice;
+        return discountedPrice;
     }
 
-    public static double CalculateTotalPrice(Ticket ticket)
+    public static double CalculateTotalPrice(Ticket ticket, double basePrice)
     {
         var (fromCity, toCity, isTwoWay, discountCard, childUnder16Present, departureDate) = ticket;
         double finalTicketPrice;
 
         finalTicketPrice =
             discountCard == null
-                ? CalculatePriceFromTimeOfDay(fromCity, toCity, departureDate)
-                : CalculatePriceFromDiscount(fromCity, toCity, discountCard, childUnder16Present);
+                ? CalculatePriceFromTimeOfDay(basePrice, departureDate)
+                : CalculatePriceFromDiscount(basePrice, discountCard, childUnder16Present);
 
         // Include one-way and two-way trips
         finalTicketPrice = isTwoWay ? finalTicketPrice * 2 : finalTicketPrice;
