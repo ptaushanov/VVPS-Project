@@ -86,6 +86,21 @@ public class DiscountsView : View
         Console.WriteLine("[Users & discount cards]" + Environment.NewLine);
 
         int? selectedIndexOfUser = null;
+
+        users
+            .Select(user => FormatSingleUserWithDiscount(user))
+            .ToList()
+            .ForEach(Console.WriteLine);
+
+        return selectedIndexOfUser;
+    }
+
+    public int? DisplayUserDiscountCardSelectMenu(IEnumerable<User> users)
+    {
+        Console.Clear();
+        Console.WriteLine("[Users & discount cards]" + Environment.NewLine);
+
+        int? selectedIndexOfUser = null;
         ConsoleMenu userSelectMenu = new("User for discount card");
 
         users

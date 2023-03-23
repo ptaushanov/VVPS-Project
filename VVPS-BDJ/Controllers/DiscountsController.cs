@@ -126,7 +126,7 @@ public class DiscountsController
     private void RevokeDiscountCard()
     {
         IEnumerable<User> users = BDJService.FindAllUsers();
-        int? userId = _discountsView.DisplayUserDiscountCards(users);
+        int? userId = _discountsView.DisplayUserDiscountCardSelectMenu(users);
 
         if (userId == null)
         {
