@@ -15,8 +15,20 @@ namespace VVPS_BDJ.DAL
             _bdjContext.SaveChanges();
         }
 
-        public static IEnumerable<Reservation> FindAllUserReservations(int userId) =>
-            _bdjContext.Reservations.Where(reservation => reservation.UserId == userId);
+        public static IEnumerable<Reservation> FindAllUserReservations(int userId, bool includeCanceled)
+        {
+            if (!includeCanceled)
+                return _bdjContext.Reservations
+                .Where(reservation =>
+                    reservation.UserId == userId
+                    && !reservation.Canceled
+                )
+                .Include(reservation => reservation.ReservedTickets);
+
+            return _bdjContext.Reservations
+            .Where(reservation => reservation.UserId == userId)
+            .Include(reservation => reservation.ReservedTickets);
+        }
 
         public static void ChangeReservation() => _bdjContext.SaveChanges();
 

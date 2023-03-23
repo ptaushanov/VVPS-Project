@@ -36,20 +36,25 @@ public class TicketReservationController
         _ticketReservationView.DisplayReservationMenu();
     }
 
-    private void ViewReservations()
+    private IEnumerable<Reservation>? GetCurrentUserReservations(bool includeCanceled = false)
     {
         User? currentUser = (User?)SessionStorage.GetItem("Current-User");
         int? currentUserId = currentUser?.UserId;
 
         if (currentUserId == null)
         {
-            Console.WriteLine("You are not logged in.");
             ReturnToMenu();
-            return;
+            return null;
         }
 
-        IEnumerable<Reservation> reservations = BDJService.FindAllUserReservations((int)currentUserId);
-        _ticketReservationView.DisplayUserReservations(reservations);
+        return BDJService.FindAllUserReservations((int)currentUserId, includeCanceled);
+    }
+
+    private void ViewReservations()
+    {
+        IEnumerable<Reservation>? reservations = GetCurrentUserReservations(true);
+        if (reservations != null)
+            _ticketReservationView.DisplayUserReservations(reservations);
         ReturnToMenu();
     }
 
@@ -68,10 +73,12 @@ public class TicketReservationController
             }
 
             Ticket ticket = _ticketReservationView.DisplayTicketForm(selectedRecord);
+            // ticket.Price = TicketPricing.CalculateTotalPrice(ticket);
+
             tickets.Add(ticket);
         } while (_ticketReservationView.PromptUserForMoreTickets());
 
-        bool confirmReservation = _ticketReservationView.PromptUserForConfirmation();
+        bool confirmReservation = _ticketReservationView.PromptForReservationConfirmation();
         if (confirmReservation)
         {
             User? currentUser = (User?)SessionStorage.GetItem("Current-User");
@@ -96,7 +103,30 @@ public class TicketReservationController
 
     private void CancelReservation()
     {
-        throw new NotImplementedException();
+        IEnumerable<Reservation>? reservations = GetCurrentUserReservations();
+        if (reservations == null || reservations.Count() == 0)
+        {
+            ReturnToMenu();
+            return;
+        }
+
+        Reservation? selectedReservation =
+            _ticketReservationView.DisplayReservationSelectMenu(reservations);
+
+        if (selectedReservation == null)
+        {
+            ReturnToMenu();
+            return;
+        }
+
+        bool confirmCancellation = _ticketReservationView.PromptForCancellationConformation();
+        if (confirmCancellation)
+        {
+            selectedReservation.Canceled = true;
+            BDJService.ChangeReservation();
+        }
+
+        ReturnToMenu();
     }
 
     public TicketReservationController(TicketReservationView ticketReservationView) =>

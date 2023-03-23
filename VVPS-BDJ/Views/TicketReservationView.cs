@@ -31,16 +31,12 @@ public class TicketReservationView : View
         TimetableRecord? selectedRecord = null;
 
         ConsoleMenu timetableMenu =
-            new(
-                timetable.Select(
-                    record =>
-                        new KeyValuePair<string, Action>(
-                            FormatTimetableRecord(record),
-                            () =>
-                            {
-                                selectedRecord = record;
-                            }
-                        )
+            new(timetable.Select(
+                record =>
+                    new KeyValuePair<string, Action>(
+                        FormatTimetableRecord(record),
+                        () => selectedRecord = record
+                    )
                 ),
                 "Select train from timetable"
             );
@@ -50,10 +46,11 @@ public class TicketReservationView : View
         return selectedRecord;
     }
 
-    private DateOnly TakeDepartureDate(string dateOfBirthString)
+    private DateOnly TakeDepartureDate(string dateOfBirthString, TimeOnly departureTime)
     {
-        DateOnly departureDate;
-        bool isDateCorrect = DateOnly.TryParse(dateOfBirthString, out departureDate);
+        bool isDateCorrect = DateOnly.TryParse(dateOfBirthString, out DateOnly departureDate);
+        if (isDateCorrect)
+            isDateCorrect = departureDate.ToDateTime(departureTime) > DateTime.Now;
 
         while (!isDateCorrect)
         {
@@ -62,7 +59,7 @@ public class TicketReservationView : View
             dateOfBirthString = Console.ReadLine() ?? string.Empty;
             isDateCorrect = DateOnly.TryParse(dateOfBirthString, out departureDate);
             if (isDateCorrect)
-                isDateCorrect = departureDate >= DateOnly.FromDateTime(DateTime.Now);
+                isDateCorrect = departureDate.ToDateTime(departureTime) > DateTime.Now;
         }
 
         return departureDate;
@@ -77,7 +74,7 @@ public class TicketReservationView : View
         return answer == "y";
     }
 
-    public bool PromptUserForConfirmation()
+    public bool PromptForReservationConfirmation()
     {
         Console.WriteLine();
         Console.Write("Confirm reservation? (y/N) ");
@@ -88,15 +85,16 @@ public class TicketReservationView : View
 
     public Ticket DisplayTicketForm(TimetableRecord selectedRecord)
     {
-        Ticket ticket = new();
-
-        ticket.FromCity = selectedRecord.DepartureLocation;
-        ticket.ToCity = selectedRecord.ArrivalLocation;
+        Ticket ticket = new()
+        {
+            FromCity = selectedRecord.DepartureLocation,
+            ToCity = selectedRecord.ArrivalLocation
+        };
 
         Console.WriteLine();
         Console.Write("Departure date (dd.mm.yyyy): ");
         string departureDateAsString = Console.ReadLine() ?? string.Empty;
-        DateOnly departureDate = TakeDepartureDate(departureDateAsString);
+        DateOnly departureDate = TakeDepartureDate(departureDateAsString, selectedRecord.DepartureTime);
 
         ticket.DepartureDate = departureDate.ToDateTime(selectedRecord.DepartureTime);
 
@@ -141,6 +139,15 @@ public class TicketReservationView : View
         return formattedReservation;
     }
 
+    private string FormatReservationForSelecting(Reservation reservation)
+    {
+        string reservationStatus = reservation.Canceled ? "Canceled" : "Active";
+        string formattedReservation =
+            $"Reserved on: {reservation.ReservedOn} | Status: {reservationStatus} | " +
+            $"Tickets: {reservation.ReservedTickets.Count()}";
+        return formattedReservation;
+    }
+
     public void DisplayUserReservations(IEnumerable<Reservation> reservations)
     {
         Console.Clear();
@@ -150,5 +157,34 @@ public class TicketReservationView : View
             .Select(reservation => FormatReservation(reservation))
             .ToList()
             .ForEach(Console.WriteLine);
+    }
+
+
+    public Reservation? DisplayReservationSelectMenu(IEnumerable<Reservation> reservations)
+    {
+        Reservation? selectedReservation = null;
+
+        ConsoleMenu reservationSelectMenu =
+            new(reservations.Select(
+                reservation =>
+                    new KeyValuePair<string, Action>(
+                        FormatReservationForSelecting(reservation),
+                        () => selectedReservation = reservation
+                    )
+                ),
+                "Select reservation"
+            );
+
+        reservationSelectMenu.Show();
+        return selectedReservation;
+    }
+
+    public bool PromptForCancellationConformation()
+    {
+        Console.Clear();
+        Console.Write("Are you sure you want to cancel this reservation? (y/N) ");
+        string answer = Console.ReadLine() ?? string.Empty;
+        bool isConfirmed = answer == "y";
+        return isConfirmed;
     }
 }
