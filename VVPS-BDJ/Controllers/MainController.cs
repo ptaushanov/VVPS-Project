@@ -16,7 +16,7 @@ public class MainController
             {
                 { "Manage users (clients and admins)", () => ShowUsersMenu() },
                 { "Manage user discounts", () => ShowDiscountsMenu() },
-                { "Search trains by departure/arrival location", () => ShowSearchByLocationMenu() },
+                { "Search trains by location", () => ShowSearchByLocationMenu() },
                 { "Search trains by departure/arrival time", () => ShowSearchByTimeMenu() },
                 { "Manage reservations", () => ShowReservationMenu() },
                 { "Exit", () => Environment.Exit(0) }

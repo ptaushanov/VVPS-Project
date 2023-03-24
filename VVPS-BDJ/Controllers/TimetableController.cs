@@ -14,8 +14,7 @@ public class TimetableController
         Dictionary<string, Action> locationSearchMenuItems =
             new()
             {
-                { "Search by departure location", () => SearchByDepartureLocation() },
-                { "Search by arrival location", () => SearchByArrivalLocation() },
+                { "Search by departure and arrival location", () => SearchByDepartureArrivalLocation() },
                 { "Go Back", () => GoBack() },
             };
 
@@ -86,27 +85,18 @@ public class TimetableController
         ReturnToSearchByTimeMenu();
     }
 
-    private void SearchByArrivalLocation()
-    {
-        string arrivalLocation = _timetableView.DisplayLocationSearchInput(
-            "Arrival location: "
-        );
-
-        IEnumerable<TimetableRecord> timetableRecords =
-            BdjService.FindTimetableRecordByArrivalLocation(arrivalLocation);
-
-        _timetableView.DisplayTimetableRecords(timetableRecords);
-        ReturnToSearchByLocationMenu();
-    }
-
-    private void SearchByDepartureLocation()
+    private void SearchByDepartureArrivalLocation()
     {
         string departureLocation = _timetableView.DisplayLocationSearchInput(
             "Departure location: "
         );
 
+        string arrivalLocation = _timetableView.DisplayLocationSearchInput(
+            "Arrival location: "
+        );
+
         IEnumerable<TimetableRecord> timetableRecords =
-            BdjService.FindTimetableRecordByDepartureLocation(departureLocation);
+            BdjService.FindTimetableRecordByLocations(departureLocation, arrivalLocation);
 
         _timetableView.DisplayTimetableRecords(timetableRecords);
         ReturnToSearchByLocationMenu();

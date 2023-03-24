@@ -42,24 +42,6 @@ namespace VVPS_BDJ.DAL
 
         #region TimetableRecord Queries
 
-        public static IEnumerable<TimetableRecord> FindTimetableRecordByDepartureLocation(
-            string departureLocation
-        )
-        {
-            return _bdjContext.TimetableRecords.Where(
-                record => record.DepartureLocation == departureLocation
-            );
-        }
-
-        public static IEnumerable<TimetableRecord> FindTimetableRecordByArrivalLocation(
-            string arrivalLocation
-        )
-        {
-            return _bdjContext.TimetableRecords.Where(
-                record => record.ArrivalLocation == arrivalLocation
-            );
-        }
-
         public static IEnumerable<TimetableRecord> FindTimetableRecordByLocations(
             string departureLocation,
             string arrivalLocation
