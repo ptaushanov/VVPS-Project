@@ -15,13 +15,7 @@
 
         public DiscountCard? DiscountCard { get; set; }
 
-        public User()
-        {
-            FirstName = string.Empty;
-            LastName = string.Empty;
-            Username = string.Empty;
-            Password = string.Empty;
-        }
+        public User() { }
 
         public User(
             int userId,
@@ -68,10 +62,14 @@
         {
             if (skipEmptyValues)
             {
-                if (user.FirstName != string.Empty) FirstName = user.FirstName;
-                if (user.LastName != string.Empty) LastName = user.LastName;
-                if (user.Username != string.Empty) Username = user.Username;
-                if (user.Password != string.Empty) Password = user.Password;
+                if (user.FirstName != string.Empty)
+                    FirstName = user.FirstName;
+                if (user.LastName != string.Empty)
+                    LastName = user.LastName;
+                if (user.Username != string.Empty)
+                    Username = user.Username;
+                if (user.Password != string.Empty)
+                    Password = user.Password;
                 return;
             }
 

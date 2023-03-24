@@ -12,15 +12,15 @@
 
         public double TravelPrice { get; set; }
 
-        public TimetableRecord()
-        {
-            DepartureLocation = string.Empty;
-            ArrivalLocation = string.Empty;
-        }
+        public TimetableRecord() { }
 
         public TimetableRecord(
-            int? timetableRecordId, string departureLocation, string arrivalLocation,
-             TimeOnly departureTime, TimeOnly arrivalTime, double travelPrice
+            int? timetableRecordId,
+            string departureLocation,
+            string arrivalLocation,
+            TimeOnly departureTime,
+            TimeOnly arrivalTime,
+            double travelPrice
         )
         {
             TimetableRecordId = timetableRecordId;

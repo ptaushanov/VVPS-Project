@@ -6,12 +6,6 @@ namespace VVPS_BDJ.Models
         public string Username { get; set; }
         public string Password { get; set; }
 
-        public LoginCredentials()
-        {
-            Username = "";
-            Password = "";
-        }
-
         public LoginCredentials(string username, string password)
         {
             Username = username;

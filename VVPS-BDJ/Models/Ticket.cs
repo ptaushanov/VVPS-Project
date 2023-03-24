@@ -14,15 +14,14 @@
 
         public double? Price { get; set; }
 
-        public Ticket()
-        {
-            FromCity = string.Empty;
-            ToCity = string.Empty;
-        }
+        public Ticket() { }
 
         public Ticket(
-            int? ticketId, string fromCity, string toCity,
-            bool isTwoWay = false, bool childUnder16Present = false
+            int? ticketId,
+            string fromCity,
+            string toCity,
+            bool isTwoWay = false,
+            bool childUnder16Present = false
         )
         {
             TicketId = ticketId;
@@ -38,7 +37,8 @@
 
         internal void Deconstruct(
             out bool isTwoWay,
-            out DiscountCard? discountCard, out bool childUnder16Present,
+            out DiscountCard? discountCard,
+            out bool childUnder16Present,
             out DateTime departureDate
         )
         {
