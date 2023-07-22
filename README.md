@@ -29,11 +29,11 @@ Explorer.
 - [SonarScanner](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner/) -
   Tool for static code analysis
 
-## ✒️ Authors ✒️
+## ✒️ Authors
 
 - **Petar Taushanov** - [ptaushanov](https://github.com/ptaushanov)
 
-## 📄 License 📄
+## 📄 License
 
 This project is licensed under the MIT License - _see the_
 [LICENSE.md](https://github.com/ptaushanov/VVPS-Project/blob/master/LICENSE)
